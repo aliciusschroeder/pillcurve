@@ -41,10 +41,10 @@ const DosingForm = () => {
         doses: number[];
         times: number[];
     }>({
-        tMax: 1,
-        halfLife: 7.5,
-        startingTime: 1.5,
-        doses: [0],
+        tMax: presets[0]!.tMax,
+        halfLife: presets[0]!.halfLife,
+        startingTime: 1,
+        doses: [100],
         times: [0]
     });
 
@@ -277,7 +277,7 @@ const DosingForm = () => {
                                                     type="number"
                                                     className="bg-gray-700 rounded-lg py-2 pl-3 w-full"
                                                     onChange={handleChange}
-                                                    value="100"
+                                                    defaultValue="100"
                                                 />
                                             </div>
                                             {index === 0 ?
