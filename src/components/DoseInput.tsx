@@ -22,7 +22,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
             <h2 className={styles.formHeader}>Dosierung</h2>
 
             <form id="dosingForm" method="post" onSubmit={e => e.preventDefault()} className="space-y-4">
-                <div id="doses" className="max-h-80">
+                <div id="doses" className="overflow-auto md:max-h-24">
                     {Array.from({ length: doseCount }, (_, index) => (
                         <div className="flex flex-col md:flex-row gap-6 mb-4" key={index}>
                             <div className="md:w-1/2">
@@ -61,21 +61,22 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                     ))}
                 </div>
                 <div className="flex justify-between items-center mt-8">
+                    <div className="mx-1">
                     <button
                         type="button"
                         onClick={addDose}
                         className={`${styles.buttonCommon} ${styles.addButton}`}
                     >
-                        <FaPlus className="mr-2" />
+                        <FaPlus className="mx-1" />
                     </button>
                     <button
                         type="button"
                         onClick={removeDose}
                         className={`${styles.buttonCommon} ${styles.removeButton}`}
                     >
-                        <FaMinus className="mr-2" />
+                        <FaMinus className="mx-1" />
                     </button>
-
+                    </div>
                     <button 
                         onClick={submitForm} 
                         className={`${styles.buttonCommon} ${styles.calculateButton}`}
