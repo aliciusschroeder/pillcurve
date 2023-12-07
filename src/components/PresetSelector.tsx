@@ -48,7 +48,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
 
     return (
         <section className={styles.formSection}>
-            <h2 className="text-xl font-bold mb-4">Presets</h2>
+            <h2 className={styles.formHeader}>Presets</h2>
             <div className="mb-4">
                 <label htmlFor="presetSelector" className={styles.formLabel}>Wirkstoff Preset:</label>
                 <select
