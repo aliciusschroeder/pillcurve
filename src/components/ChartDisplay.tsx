@@ -59,7 +59,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ formData, chartData}) => {
 
     return (
         <section className="flex-grow p-6 flex items-center justify-center">
-            <div className="bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all scale-100 hover:scale-105">
+            <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-100 hover:scale-105">
                 <canvas ref={chartRef} className="min-w-full md:min-h-[500px] md:min-w-[500px]"></canvas>
             </div>
         </section>

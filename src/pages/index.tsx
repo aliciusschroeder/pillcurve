@@ -10,15 +10,9 @@ import Footer from '~/components/Footer';
 const Home: NextPage = () => {
   const [showAlert, setShowAlert] = useState(0);
 
-
-  /*
-<div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-500 to-blue-600 p-10">
-      <main className="flex-grow">
-  */
-
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex overflow-auto flex-col md:flex-row bg-gradient-to-r from-gray-800 to-gray-900 text-gray-100">
+      <main className="flex-1 flex flex-col md:flex-row bg-gradient-to-r from-gray-800 to-gray-900 text-gray-100">
         <div className="text-center py-10 space-y-6 w-full max-w-2xl mx-auto">
           <h1 className="text-5xl font-bold text-white mb-10">
             Welcome to PillCurve

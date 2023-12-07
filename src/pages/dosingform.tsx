@@ -14,7 +14,7 @@ const Home: React.FC = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="flex flex-col min-h-screen">
-                <main className="flex-1 flex overflow-auto flex-col md:flex-row bg-gray-900 text-gray-100">
+                <main className="flex-1 flex flex-col md:flex-row bg-gray-900 text-gray-100">
                     <DosingForm />
                 </main>
                 <Footer />

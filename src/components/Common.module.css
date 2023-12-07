@@ -1,0 +1,83 @@
+/* src/components/Common.module.css */
+
+.formSection {
+    border-radius: 0.5rem;
+    border: 1px solid #2D3748; /* Adjust the color to match your design */
+    background-color: #1A202C; /* Adjust the color to match your design */
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.formHeader {
+    font-size: 1.75rem; /* 28px */
+    font-weight: 700;
+    color: #63B3ED; /* Adjust the color to match your design */
+    margin-bottom: 1.5rem;
+}
+
+.formLabel {
+    display: block;
+    font-size: 1rem; /* 16px */
+    color: #A0AEC0; /* Adjust the color to match your design */
+    margin-bottom: 0.25rem;
+}
+
+.inputField {
+    background-color: #2D3748; /* Adjust the color to match your design */
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1.2rem; /* 16px */
+    color: white;
+    width: 90%;
+}
+
+.buttonCommon {
+    font-size: 1rem; /* 16px */
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 3px 6px #0005; /* subtle shadow for depth */
+    display: inline-flex; /* for aligning the icon and text */
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.addButton {
+    background-color: #48BB78; /* Adjust the color to match your design */
+}
+
+.addButton:hover {
+    background-color: #38A169; /* Adjust the color to match your design */
+}
+
+.removeButton {
+    background-color: #F56565; /* Adjust the color to match your design */
+}
+
+.removeButton:hover {
+    background-color: #E53E3E; /* Adjust the color to match your design */
+}
+
+.calculateButton {
+    background-color: #4299E1; /* Adjust the color to match your design */
+}
+
+.calculateButton:hover {
+    background-color: #3182CE; /* Adjust the color to match your design */
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+    .buttonsContainer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
