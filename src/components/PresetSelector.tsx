@@ -4,47 +4,25 @@ import React from 'react';
 import { PresetOption, FormData } from '../types';
 import styles from './Common.module.css';
 
+
 interface PresetSelectorProps {
     presets: PresetOption[];
     selectedPreset: string;
-    onSelectedPresetChange: React.Dispatch<React.SetStateAction<string>>;
-    formData: FormData;
-    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-}
+    onSelectedPresetChange: (presetId: string) => void;
+    getSelectedPreset: () => PresetOption | undefined;
+  }
 
 const PresetSelector: React.FC<PresetSelectorProps> = ({
     presets,
     selectedPreset,
     onSelectedPresetChange,
-    formData,
-    setFormData
+    getSelectedPreset
 }) => {
+    const selectedPresetData = getSelectedPreset();
+
     const handlePresetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const presetId = event.target.value;
-        const preset = presets.find(p => p.id === presetId);
-        if (preset) {
-            setFormData({
-                ...formData,
-                halfLife: preset.halfLife,
-                tMax: preset.tMax
-            });
-        }
-        onSelectedPresetChange(presetId);
-    };
-
-    const handleHalfLifeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            halfLife: parseFloat(event.target.value)
-        });
-    };
-
-    const handleTMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            tMax: parseFloat(event.target.value)
-        });
-    };
+        onSelectedPresetChange(event.target.value);
+      };
 
     return (
         <section className={styles.formSection}>
@@ -71,8 +49,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
                     <input
                         id="halfLife"
                         type="number"
-                        value={formData.halfLife.toString()}
-                        onChange={handleHalfLifeChange}
+                        value={selectedPresetData?.halfLife ?? ''}
                         className={styles.inputField}
                         disabled={selectedPreset !== 'custom'}
                     />
@@ -82,8 +59,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
                     <input
                         id="tMax"
                         type="number"
-                        value={formData.tMax.toString()}
-                        onChange={handleTMaxChange}
+                        value={selectedPresetData?.tMax ?? ''}
                         className={styles.inputField}
                         disabled={selectedPreset !== 'custom'}
                     />

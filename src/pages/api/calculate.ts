@@ -38,6 +38,7 @@ function calculateConcentration(halfLife: number, tMax: number, doses: number[],
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
       const { halfLife, tMax, doses, times, startingTime } = req.body;
+      //console.log('Received request body:', req.body);
   
       // Validation
       if (!halfLife || halfLife <= 0) {

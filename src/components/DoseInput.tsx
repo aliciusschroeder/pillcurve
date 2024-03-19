@@ -8,15 +8,27 @@ import styles from './Common.module.css';
 
 interface DoseInputProps {
     doseCount: number;
-    formData: FormData;
-    addDose: () => void;
-    removeDose: () => void;
+    doses: number[];
+    times: number[];
     onDoseChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    submitForm: () => Promise<void>;
+    onAddDose: () => void;
+    onRemoveDose: () => void;
+    onStartingTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: () => Promise<void>;
 }
 
-const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, removeDose, onDoseChange, onTimeChange, submitForm }) => {
+const DoseInput: React.FC<DoseInputProps> = ({
+    doseCount,
+    doses,
+    times,
+    onDoseChange,
+    onTimeChange,
+    onAddDose,
+    onRemoveDose,
+    onStartingTimeChange,
+    onSubmit,
+}) => {
     return (
         <section className={styles.formSection}>
             <h2 className={styles.formHeader}>Dosierung</h2>
@@ -32,7 +44,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                     type="number"
                                     className={styles.inputField}
                                     onChange={onDoseChange}
-                                    value={formData.doses[index] || ''}
+                                    value={doses[index] || ''}
                                 />
                             </div>
                             {index === 0 ?
@@ -42,7 +54,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                         name="starting_time_picker"
                                         type="time"
                                         className={styles.inputField}
-                                        onChange={onTimeChange}
+                                        onChange={onStartingTimeChange}
                                     />
                                 </div>
                                 :
@@ -52,8 +64,8 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                         name={`time${index + 1}`}
                                         type="number"
                                         className={styles.inputField}
-                                        onChange={onDoseChange}
-                                        value={formData.times[index] || ''}
+                                        onChange={onTimeChange}
+                                        value={times[index] || ''}
                                     />
                                 </div>
                             }
@@ -62,28 +74,28 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                 </div>
                 <div className="flex justify-between items-center mt-8">
                     <div className="mx-1">
-                    <button
-                        type="button"
-                        onClick={addDose}
-                        className={`${styles.buttonCommon} ${styles.addButton}`}
-                    >
-                        <FaPlus className="mx-1" />
-                    </button>
-                    <button
-                        type="button"
-                        onClick={removeDose}
-                        className={`${styles.buttonCommon} ${styles.removeButton}`}
-                    >
-                        <FaMinus className="mx-1" />
-                    </button>
+                        <button
+                            type="button"
+                            onClick={onAddDose}
+                            className={`${styles.buttonCommon} ${styles.addButton}`}
+                        >
+                            <FaPlus className="mx-1" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onRemoveDose}
+                            className={`${styles.buttonCommon} ${styles.removeButton}`}
+                        >
+                            <FaMinus className="mx-1" />
+                        </button>
                     </div>
-                    <button 
-                        onClick={submitForm} 
+                    <button
+                        onClick={onSubmit}
                         className={`${styles.buttonCommon} ${styles.calculateButton}`}
                     >
-                            Berechnen
+                        Berechnen
                     </button>
-                    
+
 
                 </div>
             </form>
