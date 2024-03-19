@@ -11,12 +11,12 @@ interface DoseInputProps {
     formData: FormData;
     addDose: () => void;
     removeDose: () => void;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onDoseChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     submitForm: () => Promise<void>;
 }
 
-const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, removeDose, handleChange, handleTimeChange, submitForm }) => {
+const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, removeDose, onDoseChange, onTimeChange, submitForm }) => {
     return (
         <section className={styles.formSection}>
             <h2 className={styles.formHeader}>Dosierung</h2>
@@ -31,7 +31,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                     name={`dose${index + 1}`}
                                     type="number"
                                     className={styles.inputField}
-                                    onChange={handleChange}
+                                    onChange={onDoseChange}
                                     value={formData.doses[index] || ''}
                                 />
                             </div>
@@ -42,7 +42,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                         name="starting_time_picker"
                                         type="time"
                                         className={styles.inputField}
-                                        onChange={handleTimeChange}
+                                        onChange={onTimeChange}
                                     />
                                 </div>
                                 :
@@ -52,7 +52,7 @@ const DoseInput: React.FC<DoseInputProps> = ({ doseCount, formData, addDose, rem
                                         name={`time${index + 1}`}
                                         type="number"
                                         className={styles.inputField}
-                                        onChange={handleChange}
+                                        onChange={onDoseChange}
                                         value={formData.times[index] || ''}
                                     />
                                 </div>

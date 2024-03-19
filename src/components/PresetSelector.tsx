@@ -7,7 +7,7 @@ import styles from './Common.module.css';
 interface PresetSelectorProps {
     presets: PresetOption[];
     selectedPreset: string;
-    setSelectedPreset: React.Dispatch<React.SetStateAction<string>>;
+    onSelectedPresetChange: React.Dispatch<React.SetStateAction<string>>;
     formData: FormData;
     setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
@@ -15,7 +15,7 @@ interface PresetSelectorProps {
 const PresetSelector: React.FC<PresetSelectorProps> = ({
     presets,
     selectedPreset,
-    setSelectedPreset,
+    onSelectedPresetChange,
     formData,
     setFormData
 }) => {
@@ -29,7 +29,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
                 tMax: preset.tMax
             });
         }
-        setSelectedPreset(presetId);
+        onSelectedPresetChange(presetId);
     };
 
     const handleHalfLifeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

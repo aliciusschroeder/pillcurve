@@ -29,7 +29,7 @@ const DosingForm: React.FC = () => {
                         <PresetSelector
                             presets={presets}
                             selectedPreset={selectedPreset}
-                            setSelectedPreset={setSelectedPreset}
+                            onSelectedPresetChange={setSelectedPreset}
                             formData={formData}
                             setFormData={setFormData}
                         />
@@ -38,8 +38,8 @@ const DosingForm: React.FC = () => {
                             formData={formData}
                             addDose={addDose}
                             removeDose={removeDose}
-                            handleChange={handleChange}
-                            handleTimeChange={handleTimeChange}
+                            onDoseChange={handleChange}
+                            onTimeChange={handleTimeChange}
                             submitForm={submitForm}
                         />
                     </aside>
