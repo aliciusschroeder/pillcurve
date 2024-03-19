@@ -1,7 +1,7 @@
 // src/components/PresetSelector.tsx
 
 import React from 'react';
-import { PresetOption, FormData } from '../types';
+import { PresetOption } from '../types';
 import styles from './Common.module.css';
 
 

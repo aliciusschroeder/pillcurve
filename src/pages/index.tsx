@@ -1,7 +1,7 @@
 //src/pages/index.tsx
 
 import { CSSTransition } from 'react-transition-group';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { type NextPage } from "next";
 import Footer from '~/components/Footer';

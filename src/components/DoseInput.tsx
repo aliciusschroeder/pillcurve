@@ -1,7 +1,6 @@
 // src/components/DoseInput.tsx
 
 import React from 'react';
-import { FormData } from '../types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import styles from './Common.module.css';
 
