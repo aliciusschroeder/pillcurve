@@ -55,7 +55,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ formData, chartData}) => {
                 chartInstance.current = new Chart(ctx, chartConfig);
             }
         }
-    }, [chartData, formData.times]);
+    }, [chartData]);
 
     return (
         <section className="flex-grow p-6 flex items-center justify-center">
