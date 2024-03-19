@@ -10,10 +10,9 @@ interface ChartDisplayProps {
   startingTime: number;
   halfLife: number;
   tMax: number;
-  onCalculate: () => void;
 }
 
-const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime, halfLife, tMax, onCalculate }) => {
+const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime, halfLife, tMax }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
   const [concentration, setConcentration] = useState<number[]>([]);

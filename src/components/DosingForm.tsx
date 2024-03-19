@@ -21,12 +21,6 @@ const DosingForm: React.FC = () => {
         submitForm,
     } = useDosingForm();
 
-    const [calculateTrigger, setCalculateTrigger] = useState(false);
-
-    const handleCalculate = () => {
-        setCalculateTrigger(!calculateTrigger);
-    };
-
 
     return (
         <>
@@ -36,7 +30,6 @@ const DosingForm: React.FC = () => {
                 startingTime={formData.startingTime}
                 halfLife={formData.halfLife}
                 tMax={formData.tMax}
-                onCalculate={handleCalculate}
             />
             <aside className="md:w-96 bg-gray-800 p-6">
                 <h1 className="text-4xl font-bold text-center mb-6">PillCurve</h1>
