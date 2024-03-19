@@ -1,13 +1,10 @@
 // src/components/DosingForm.tsx
 
-import React, { useState } from 'react';
-import Head from 'next/head';
+import React from 'react';
 import PresetSelector from './PresetSelector';
 import DoseInput from './DoseInput';
 import ChartDisplay from './ChartDisplay';
-import { PresetOption } from '../types';
 import { useDosingForm } from '../hooks/useDosingForm';
-import Footer from './Footer';
 
 const DosingForm: React.FC = () => {
     const {
