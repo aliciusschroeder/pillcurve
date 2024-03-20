@@ -1,72 +1,45 @@
-// src/components/ChartDisplay.tsx
-
-import React, { useRef, useEffect, useState } from 'react';
-import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
-import annotationPlugin from 'chartjs-plugin-annotation';
+//src/components/ChartDisplay.tsx
+import React from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import moment from 'moment';
 
 interface ChartDisplayProps {
-  doses: number[];
-  times: number[];
-  startingTime: number;
-  halfLife: number;
-  tMax: number;
   concentrationData: number[];
+  startingTime: number;
 }
 
-const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime, halfLife, tMax, concentrationData, }) => {
-  const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart | null>(null);
-  const [concentration, setConcentration] = useState<number[]>([]);
+const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, startingTime }) => {
+  const data = concentrationData.map((concentration, index) => ({
+    time: index,
+    concentration,
+  }));
 
-  useEffect(() => {
-    Chart.register(...registerables);
-    Chart.register(annotationPlugin);
-  }, []);
-
-  useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
-      if (ctx) {
-        if (chartInstance.current) {
-          chartInstance.current.destroy();
-        }
-
-        const labels = Array.from({ length: 720 }, (_, i) => i); // 0 to 719
-
-        const chartConfig: ChartConfiguration<ChartType, number[], number> = {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Aktuell wirksame Dosis (mg)',
-              data: concentrationData,
-              borderColor: 'blue',
-              tension: 0.1,
-              borderWidth: 2,
-              fill: false
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                min: Math.round(Math.min(...concentrationData) * 0.25),
-                max: Math.round(Math.max(...concentrationData) * 1.2)
-              }
-            }
-          }
-        };
-
-        chartInstance.current = new Chart(ctx, chartConfig);
-      }
-    }
-  }, [concentrationData]);
+  const formatXAxis = (tickItem: number) => {
+    const time = moment().startOf('day').add(startingTime, 'minutes').add(tickItem, 'minutes');
+    const roundedMinutes = Math.round(time.minutes() / 30) * 30;
+    const roundedTime = time.clone().minute(roundedMinutes);
+    return startingTime === 0 ? roundedTime.format('H:mm') : roundedTime.format('HH:mm');
+  };
 
   return (
     <section className="p-6 flex items-center justify-center flex-grow">
-      <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-100 hover:scale-105">
-        <canvas ref={chartRef} className="min-w-full md:min-h-[500px] md:min-w-[500px]"></canvas>
+      <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-100 hover:scale-105 flex-grow">
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="time"
+              tickFormatter={formatXAxis}
+              interval={29}
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis domain={['auto', 'auto']} />
+            <Tooltip labelFormatter={formatXAxis} />
+            <Line type="monotone" dataKey="concentration" stroke="#8884d8" strokeWidth={2} dot={false} isAnimationActive={false} />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
-    </section >
+    </section>
   );
 };
 
