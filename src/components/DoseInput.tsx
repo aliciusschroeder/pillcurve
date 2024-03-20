@@ -14,7 +14,7 @@ interface DoseInputProps {
     onAddDose: () => void;
     onRemoveDose: () => void;
     onStartingTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: () => Promise<void>;
+    onCalculateClick: () => void;
 }
 
 const DoseInput: React.FC<DoseInputProps> = ({
@@ -26,7 +26,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
     onAddDose,
     onRemoveDose,
     onStartingTimeChange,
-    onSubmit,
+    onCalculateClick,
 }) => {
     return (
         <section className={styles.formSection}>
@@ -89,7 +89,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
                         </button>
                     </div>
                     <button
-                        onClick={onSubmit}
+                        onClick={onCalculateClick}
                         className={`${styles.buttonCommon} ${styles.calculateButton}`}
                     >
                         Berechnen

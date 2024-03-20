@@ -2,7 +2,10 @@
 import { useFormState } from './useFormState';
 import { usePresetSelection } from './usePresetSelection';
 import { addDose, removeDose, updateDose } from '../utils/doseUtils';
-import { calculateConcentration } from '../utils/api';
+//import { calculateConcentration } from '../utils/api';
+import { useState } from 'react';
+import { calculateConcentration } from '../utils/calculateConcentration';
+import { FormData } from '../types';
 import { PresetOption } from '../types';
 
 export const useDosingForm = () => {
@@ -19,6 +22,14 @@ export const useDosingForm = () => {
     doses: [100],
     times: [0],
   });
+
+  const [concentrationData, setConcentrationData] = useState<number[]>([]);
+
+  const calculateConcentrationLocally = () => {
+    const { halfLife, tMax, doses, times, startingTime } = formData;
+    const concentration = calculateConcentration(halfLife, tMax, doses, times, startingTime);
+    setConcentrationData(concentration);
+  };
 
   const handleDoseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -53,15 +64,6 @@ export const useDosingForm = () => {
     }
   };
 
-  const submitForm = async () => {
-    try {
-      const concentration = await calculateConcentration(formData);
-      return concentration;
-    } catch (error) {
-      // Handle error
-    }
-  };
-
   return {
     presets,
     selectedPreset,
@@ -73,6 +75,8 @@ export const useDosingForm = () => {
     handleAddDose,
     handleRemoveDose,
     handleStartingTimeChange,
-    submitForm,
+    concentrationData,
+    setConcentrationData,
+    calculateConcentrationLocally,
   };
 };
