@@ -2,10 +2,8 @@
 import { useFormState } from './useFormState';
 import { usePresetSelection } from './usePresetSelection';
 import { addDose, removeDose, updateDose } from '../utils/doseUtils';
-//import { calculateConcentration } from '../utils/api';
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { calculateConcentration } from '../utils/calculateConcentration';
-import { FormData } from '../types';
 import { PresetOption } from '../types';
 
 export const useDosingForm = () => {
@@ -14,7 +12,7 @@ export const useDosingForm = () => {
     { id: '2', name: 'Wirkstoff B', halfLife: 5, tMax: 2 },
   ];
 
-  const { selectedPreset, handlePresetChange, getSelectedPreset } = usePresetSelection(presets);
+  const { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData } = usePresetSelection(presets);
   const { formData, updateFormData } = useFormState({
     tMax: presets[0]!.tMax,
     halfLife: presets[0]!.halfLife,
@@ -22,6 +20,16 @@ export const useDosingForm = () => {
     doses: [100],
     times: [0],
   });
+
+  useEffect(() => {
+    const selectedPresetData = getSelectedPreset();
+    if (selectedPresetData) {
+      updateFormData({
+        tMax: selectedPresetData.tMax,
+        halfLife: selectedPresetData.halfLife,
+      });
+    }
+  }, [selectedPreset, getSelectedPreset, updateFormData]);
 
   const [concentrationData, setConcentrationData] = useState<number[]>([]);
 
@@ -64,6 +72,22 @@ export const useDosingForm = () => {
     }
   };
 
+  const handleHalfLifeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newHalfLife = parseFloat(e.target.value);
+    if (selectedPreset === 'custom') {
+      updateCustomPresetData({ halfLife: newHalfLife });
+    }
+    updateFormData({ halfLife: newHalfLife });
+  };
+
+  const handleTMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTMax = parseFloat(e.target.value);
+    if (selectedPreset === 'custom') {
+      updateCustomPresetData({ tMax: newTMax });
+    }
+    updateFormData({ tMax: newTMax });
+  };
+
   return {
     presets,
     selectedPreset,
@@ -76,7 +100,8 @@ export const useDosingForm = () => {
     handleRemoveDose,
     handleStartingTimeChange,
     concentrationData,
-    setConcentrationData,
     calculateConcentrationLocally,
+    handleHalfLifeChange,
+    handleTMaxChange,
   };
 };

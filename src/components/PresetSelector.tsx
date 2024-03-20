@@ -9,6 +9,8 @@ interface PresetSelectorProps {
     presets: PresetOption[];
     selectedPreset: string;
     onSelectedPresetChange: (presetId: string) => void;
+    onHalfLifeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onTMaxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     getSelectedPreset: () => PresetOption | undefined;
   }
 
@@ -16,6 +18,8 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
     presets,
     selectedPreset,
     onSelectedPresetChange,
+    onHalfLifeChange,
+    onTMaxChange,
     getSelectedPreset
 }) => {
     const selectedPresetData = getSelectedPreset();
@@ -28,7 +32,9 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
         <section className={styles.formSection}>
             <h2 className={styles.formHeader}>Presets</h2>
             <div className="mb-4">
-                <label htmlFor="presetSelector" className={styles.formLabel}>Wirkstoff Preset:</label>
+                <label htmlFor="presetSelector" className={styles.formLabel}>
+                    Wirkstoff Preset:
+                </label>
                 <select
                     id="presetSelector"
                     value={selectedPreset}
@@ -45,13 +51,16 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
             </div>
             <div className="flex flex-col md:flex-row justify-between gap-4">
                 <div className="mb-4 md:mb-0 md:w-1/2">
-                    <label htmlFor="halfLife" className={styles.formLabel}>Half-Life:</label>
+                    <label htmlFor="halfLife" className={styles.formLabel}>
+                        Half-Life:
+                    </label>
                     <input
                         id="halfLife"
                         type="number"
                         value={selectedPresetData?.halfLife ?? ''}
                         className={styles.inputField}
                         disabled={selectedPreset !== 'custom'}
+                        onChange={onHalfLifeChange}
                     />
                 </div>
                 <div className="md:w-1/2">
@@ -62,6 +71,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
                         value={selectedPresetData?.tMax ?? ''}
                         className={styles.inputField}
                         disabled={selectedPreset !== 'custom'}
+                        onChange={onTMaxChange}
                     />
                 </div>
             </div>

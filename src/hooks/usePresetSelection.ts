@@ -2,18 +2,29 @@
 import { useState } from 'react';
 import { PresetOption } from '../types';
 
-// This hook manages the selected preset and provides functions to handle preset changes and retrieve the currently selected preset
-
 export const usePresetSelection = (presets: PresetOption[]) => {
   const [selectedPreset, setSelectedPreset] = useState<string>(presets[0]?.id || '');
+  const [customPresetData, setCustomPresetData] = useState<PresetOption>({
+    id: 'custom',
+    name: 'Custom',
+    halfLife: 0,
+    tMax: 0,
+  });
 
   const handlePresetChange = (presetId: string) => {
     setSelectedPreset(presetId);
   };
 
   const getSelectedPreset = () => {
+    if (selectedPreset === 'custom') {
+      return customPresetData;
+    }
     return presets.find((preset) => preset.id === selectedPreset);
   };
 
-  return { selectedPreset, handlePresetChange, getSelectedPreset };
+  const updateCustomPresetData = (updates: Partial<PresetOption>) => {
+    setCustomPresetData((prevData) => ({ ...prevData, ...updates }));
+  };
+
+  return { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData };
 };
