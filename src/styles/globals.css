@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 :root {
     --primary: #f3f4f6;
     --secondary: #2D3748/*rgba(26, 32, 44, 0.4)*/;

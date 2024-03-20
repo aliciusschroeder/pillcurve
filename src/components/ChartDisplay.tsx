@@ -18,31 +18,6 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
   const chartInstance = useRef<Chart | null>(null);
   const [concentration, setConcentration] = useState<number[]>([]);
 
-  /*useEffect(() => {
-    const fetchConcentration = async () => {
-      try {
-        const response = await fetch('/api/calculate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ doses, times, startingTime, halfLife, tMax }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setConcentration(data.concentration);
-      } catch (error) {
-        console.error('There was an error fetching concentration:', error);
-      }
-    };
-
-    fetchConcentration();
-  }, [doses, times, startingTime, halfLife, tMax]);*/
-
   useEffect(() => {
     Chart.register(...registerables);
     Chart.register(annotationPlugin);
@@ -87,11 +62,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
   }, [concentrationData]);
 
   return (
-    <section className="flex-grow p-6 flex items-center justify-center">
+    <section className="p-6 flex items-center justify-center flex-grow">
       <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-100 hover:scale-105">
         <canvas ref={chartRef} className="min-w-full md:min-h-[500px] md:min-w-[500px]"></canvas>
       </div>
-    </section>
+    </section >
   );
 };
 
