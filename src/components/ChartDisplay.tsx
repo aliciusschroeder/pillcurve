@@ -10,14 +10,15 @@ interface ChartDisplayProps {
   startingTime: number;
   halfLife: number;
   tMax: number;
+  concentrationData: number[];
 }
 
-const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime, halfLife, tMax }) => {
+const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime, halfLife, tMax, concentrationData, }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
   const [concentration, setConcentration] = useState<number[]>([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchConcentration = async () => {
       try {
         const response = await fetch('/api/calculate', {
@@ -40,7 +41,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
     };
 
     fetchConcentration();
-  }, [doses, times, startingTime, halfLife, tMax]);
+  }, [doses, times, startingTime, halfLife, tMax]);*/
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -63,7 +64,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
             labels: labels,
             datasets: [{
               label: 'Aktuell wirksame Dosis (mg)',
-              data: concentration,
+              data: concentrationData,
               borderColor: 'blue',
               tension: 0.1,
               borderWidth: 2,
@@ -73,8 +74,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
           options: {
             scales: {
               y: {
-                min: Math.round(Math.min(...concentration) * 0.25),
-                max: Math.round(Math.max(...concentration) * 1.2)
+                min: Math.round(Math.min(...concentrationData) * 0.25),
+                max: Math.round(Math.max(...concentrationData) * 1.2)
               }
             }
           }
@@ -83,7 +84,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ doses, times, startingTime,
         chartInstance.current = new Chart(ctx, chartConfig);
       }
     }
-  }, [concentration]);
+  }, [concentrationData]);
 
   return (
     <section className="flex-grow p-6 flex items-center justify-center">

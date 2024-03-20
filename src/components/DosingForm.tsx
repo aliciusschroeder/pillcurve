@@ -18,8 +18,15 @@ const DosingForm: React.FC = () => {
         handleAddDose,
         handleRemoveDose,
         handleStartingTimeChange,
-        submitForm,
+        concentrationData,
+        setConcentrationData,
+        calculateConcentrationLocally,
     } = useDosingForm();
+
+    const handleCalculateClick = () => {
+        calculateConcentrationLocally();
+      };
+    
 
 
     return (
@@ -30,6 +37,7 @@ const DosingForm: React.FC = () => {
                 startingTime={formData.startingTime}
                 halfLife={formData.halfLife}
                 tMax={formData.tMax}
+                concentrationData={concentrationData}
             />
             <aside className="md:w-96 bg-gray-800 p-6">
                 <h1 className="text-4xl font-bold text-center mb-6">PillCurve</h1>
@@ -48,7 +56,7 @@ const DosingForm: React.FC = () => {
                     onAddDose={handleAddDose}
                     onRemoveDose={handleRemoveDose}
                     onStartingTimeChange={handleStartingTimeChange}
-                    onSubmit={submitForm}
+                    onCalculateClick={handleCalculateClick}
                 />
             </aside>
         </>
