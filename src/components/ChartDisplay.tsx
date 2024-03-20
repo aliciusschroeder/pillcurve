@@ -23,7 +23,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, starting
 
   return (
     <section className="p-6 flex items-center justify-center flex-grow">
-      <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-100 hover:scale-105 flex-grow">
+      <div className="bg-gray-800 rounded-3xl shadow-2xl transform transition-all scale-95 hover:scale-100 flex-grow">
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />

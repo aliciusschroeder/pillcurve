@@ -2,7 +2,10 @@
 
 import React from 'react';
 import { PresetOption } from '../types';
+import { TextField, MenuItem } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import styles from './Common.module.css';
+import theme from '../theme/theme';
 
 
 interface PresetSelectorProps {
@@ -12,7 +15,7 @@ interface PresetSelectorProps {
     onHalfLifeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onTMaxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     getSelectedPreset: () => PresetOption | undefined;
-  }
+}
 
 const PresetSelector: React.FC<PresetSelectorProps> = ({
     presets,
@@ -20,63 +23,73 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
     onSelectedPresetChange,
     onHalfLifeChange,
     onTMaxChange,
-    getSelectedPreset
+    getSelectedPreset,
 }) => {
     const selectedPresetData = getSelectedPreset();
 
     const handlePresetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         onSelectedPresetChange(event.target.value);
-      };
+    };
 
     return (
-        <section className={styles.formSection}>
+        <ThemeProvider theme={theme}>
+          <section className={styles.formSection}>
             <h2 className={styles.formHeader}>Presets</h2>
             <div className="mb-4">
-                <label htmlFor="presetSelector" className={styles.formLabel}>
-                    Wirkstoff Preset:
-                </label>
-                <select
-                    id="presetSelector"
-                    value={selectedPreset}
-                    onChange={handlePresetChange}
-                    className={styles.inputField}
-                >
-                    {presets.map(preset => (
-                        <option key={preset.id} value={preset.id}>
-                            {preset.name}
-                        </option>
-                    ))}
-                    <option value="custom">Custom</option>
-                </select>
+              <TextField
+                select
+                label="Wirkstoff Preset"
+                value={selectedPreset}
+                onChange={(e) => onSelectedPresetChange(e.target.value)}
+                fullWidth
+                variant="outlined"
+                size="small"
+              >
+                {presets.map((preset) => (
+                  <MenuItem key={preset.id} value={preset.id}>
+                    {preset.name}
+                  </MenuItem>
+                ))}
+                <MenuItem value="custom">Custom</MenuItem>
+              </TextField>
             </div>
-            <div className="flex flex-col md:flex-row justify-between gap-4">
-                <div className="mb-4 md:mb-0 md:w-1/2">
-                    <label htmlFor="halfLife" className={styles.formLabel}>
-                        Half-Life:
-                    </label>
-                    <input
-                        id="halfLife"
-                        type="number"
-                        value={selectedPresetData?.halfLife ?? ''}
-                        className={styles.inputField}
-                        disabled={selectedPreset !== 'custom'}
-                        onChange={onHalfLifeChange}
-                    />
-                </div>
-                <div className="md:w-1/2">
-                    <label htmlFor="tMax" className={styles.formLabel}>t_Max:</label>
-                    <input
-                        id="tMax"
-                        type="number"
-                        value={selectedPresetData?.tMax ?? ''}
-                        className={styles.inputField}
-                        disabled={selectedPreset !== 'custom'}
-                        onChange={onTMaxChange}
-                    />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <TextField
+                  label="Half-Life"
+                  type="number"
+                  value={selectedPresetData?.halfLife ?? ''}
+                  onChange={onHalfLifeChange}
+                  disabled={selectedPreset !== 'custom'}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  InputProps={{
+                    endAdornment: <span>h</span>,
+                  }}
+                />
+              </div>
+              <div>
+                <TextField
+                  label="t_Max"
+                  type="number"
+                  value={selectedPresetData?.tMax ?? ''}
+                  onChange={onTMaxChange}
+                  disabled={selectedPreset !== 'custom'}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  InputProps={{
+                    endAdornment: <span>h</span>
+                        }}
+                />
+              </div>
             </div>
-        </section>
-    );
-};
+          </section>
+        </ThemeProvider>
+      );
+    };
+    
+
 
 export default PresetSelector;
