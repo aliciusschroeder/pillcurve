@@ -34,12 +34,12 @@ const DosingForm: React.FC = () => {
         <>
             <div className="flex-grow">
                 <ChartDisplay
-                    doses={formData.doses}
-                    times={formData.times}
-                    startingTime={formData.startingTime}
-                    halfLife={formData.halfLife}
-                    tMax={formData.tMax}
+                    // doses={formData.doses}
+                    // times={formData.times}
+                    // halfLife={formData.halfLife}
+                    // tMax={formData.tMax}
                     concentrationData={concentrationData}
+                    startingTime={formData.startingTime}
                 />
             </div>
             <aside className="md:w-96 bg-gray-800 p-6 overflow-auto">

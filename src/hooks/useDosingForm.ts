@@ -1,8 +1,9 @@
 // src/hooks/useDosingForm.ts
+
 import { useFormState } from './useFormState';
 import { usePresetSelection } from './usePresetSelection';
 import { addDose, removeDose, updateDose } from '../utils/doseUtils';
-import { useState, useEffect  } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { calculateConcentration } from '../utils/calculateConcentration';
 import { PresetOption } from '../types';
 
@@ -21,15 +22,18 @@ export const useDosingForm = () => {
     times: [0],
   });
 
+  const memoizedGetSelectedPreset = useCallback(getSelectedPreset, []);
+  const memoizedUpdateFormData = useCallback(updateFormData, []);
+
   useEffect(() => {
-    const selectedPresetData = getSelectedPreset();
+    const selectedPresetData = memoizedGetSelectedPreset();
     if (selectedPresetData) {
-      updateFormData({
+      memoizedUpdateFormData({
         tMax: selectedPresetData.tMax,
         halfLife: selectedPresetData.halfLife,
       });
     }
-  }, [selectedPreset, getSelectedPreset, updateFormData]);
+  }, [selectedPreset, memoizedGetSelectedPreset, memoizedUpdateFormData]);
 
   const [concentrationData, setConcentrationData] = useState<number[]>([]);
 
