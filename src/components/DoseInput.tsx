@@ -1,8 +1,10 @@
 // src/components/DoseInput.tsx
 
 import React from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import styles from './Common.module.css';
+import { TextField, Button, IconButton } from '@mui/material';
+import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme/theme';
 
 
 interface DoseInputProps {
@@ -29,77 +31,91 @@ const DoseInput: React.FC<DoseInputProps> = ({
     onCalculateClick,
 }) => {
     return (
-        <section className={styles.formSection}>
-            <h2 className={styles.formHeader}>Dosierung</h2>
-
-            <form id="dosingForm" method="post" onSubmit={e => e.preventDefault()} className="space-y-4">
-                <div id="doses" className="overflow-auto md:max-h-24">
-                    {Array.from({ length: doseCount }, (_, index) => (
-                        <div className="flex flex-col md:flex-row gap-6 mb-4" key={index}>
-                            <div className="md:w-1/2">
-                                <label className={styles.formLabel}>Dosis {index + 1} (mg):</label>
-                                <input
-                                    name={`dose${index + 1}`}
-                                    type="number"
-                                    className={styles.inputField}
-                                    onChange={onDoseChange}
-                                    value={doses[index] || ''}
-                                />
-                            </div>
-                            {index === 0 ?
-                                <div className="md:w-1/2">
-                                    <label className={styles.formLabel}>Beginn:</label>
-                                    <input
-                                        name="starting_time_picker"
-                                        type="time"
-                                        className={styles.inputField}
-                                        onChange={onStartingTimeChange}
-                                    />
-                                </div>
-                                :
-                                <div className="md:w-1/2">
-                                    <label className={styles.formLabel}>Zeit {index + 1} (Min):</label>
-                                    <input
-                                        name={`time${index + 1}`}
-                                        type="number"
-                                        className={styles.inputField}
-                                        onChange={onTimeChange}
-                                        value={times[index] || ''}
-                                    />
-                                </div>
-                            }
-                        </div>
-                    ))}
-                </div>
-                <div className="flex justify-between items-center mt-8">
-                    <div className="mx-1">
-                        <button
-                            type="button"
-                            onClick={onAddDose}
-                            className={`${styles.buttonCommon} ${styles.addButton}`}
-                        >
-                            <FaPlus className="mx-1" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={onRemoveDose}
-                            className={`${styles.buttonCommon} ${styles.removeButton}`}
-                        >
-                            <FaMinus className="mx-1" />
-                        </button>
+        <ThemeProvider theme={theme}>
+          <section className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
+            <h2 className="text-2xl font-bold text-blue-400 mb-4">Dosierung</h2>
+            <form id="dosingForm" onSubmit={e => e.preventDefault()} className="space-y-4">
+              <div id="doses" className="space-y-4">
+                {Array.from({ length: doseCount }, (_, index) => (
+                  <div className="flex flex-col md:flex-row gap-4" key={index}>
+                    <div className="md:w-1/2">
+                      <TextField
+                        label={`Dosis ${index + 1}`}
+                        type="number"
+                        name={`dose${index + 1}`}
+                        value={doses[index] || ''}
+                        onChange={onDoseChange}
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        InputProps={{
+                          className: 'text-white bg-gray-700',
+                          endAdornment: <span>mg</span>,
+                        }}
+                        InputLabelProps={{
+                          className: 'text-gray-400',
+                        }}
+                      />
                     </div>
-                    <button
-                        onClick={onCalculateClick}
-                        className={`${styles.buttonCommon} ${styles.calculateButton}`}
-                    >
-                        Berechnen
-                    </button>
-
-
+                    {index === 0 ? (
+                      <div className="md:w-1/2">
+                        <TextField
+                          label="Beginn"
+                          type="time"
+                          name="starting_time_picker"
+                          onChange={onStartingTimeChange}
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                          InputProps={{
+                            className: 'text-white bg-gray-700',
+                          }}
+                          InputLabelProps={{
+                            className: 'text-gray-400',
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="md:w-1/2">
+                        <TextField
+                          label={`Zeit ${index + 1}`}
+                          type="number"
+                          name={`time${index + 1}`}
+                          value={times[index] || ''}
+                          onChange={onTimeChange}
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                          InputProps={{
+                            className: 'text-white bg-gray-700',
+                            endAdornment: <span>min</span>,
+                          }}
+                          InputLabelProps={{
+                            className: 'text-gray-400',
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between items-center mt-6">
+                <div>
+                  <IconButton onClick={onAddDose} color="primary">
+                    <AddIcon />
+                  </IconButton>
+                  <IconButton onClick={onRemoveDose} color="secondary">
+                    <RemoveIcon />
+                  </IconButton>
                 </div>
+                <Button variant="contained" color="primary" onClick={onCalculateClick}>
+                  Berechnen
+                </Button>
+              </div>
             </form>
-        </section>
-    );
+          </section>
+        </ThemeProvider>
+      );    
 };
 
 export default DoseInput;

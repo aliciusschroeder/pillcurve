@@ -2,8 +2,8 @@
 
 .formSection {
     border-radius: 0.5rem;
-    border: 1px solid #2D3748; /* Adjust the color to match your design */
-    background-color: #1A202C; /* Adjust the color to match your design */
+    border: 1px solid #2D3748;
+    background-color: #1A202C;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
 }
@@ -11,19 +11,19 @@
 .formHeader {
     font-size: 1.75rem; /* 28px */
     font-weight: 700;
-    color: #63B3ED; /* Adjust the color to match your design */
+    color: #63B3ED;
     margin-bottom: 1.0rem;
 }
 
 .formLabel {
     display: block;
     font-size: 1rem; /* 16px */
-    color: #A0AEC0; /* Adjust the color to match your design */
+    color: #A0AEC0;
     margin-bottom: 0.25rem;
 }
 
 .inputField {
-    background-color: #2D3748; /* Adjust the color to match your design */
+    background-color: #2D3748;
     border-radius: 0.375rem;
     padding: 0.5rem 0.75rem;
     margin-left: 1.5px;
@@ -46,30 +46,30 @@
 }
 
 .addButton {
-    background-color: #48BB78; /* Adjust the color to match your design */
+    background-color: #48BB78;
     margin-right: 0.25rem; /* 4px */
 }
 
 .addButton:hover {
-    background-color: #38A169; /* Adjust the color to match your design */
+    background-color: #38A169;
 }
 
 .removeButton {
-    background-color: #F56565; /* Adjust the color to match your design */
+    background-color: #F56565;
     margin-left: 0.25rem; /* 4px */
 }
 
 .removeButton:hover {
-    background-color: #E53E3E; /* Adjust the color to match your design */
+    background-color: #E53E3E;
 }
 
 .calculateButton {
-    background-color: #4299E1; /* Adjust the color to match your design */
+    background-color: #4299E1;
     width: 48%;
 }
 
 .calculateButton:hover {
-    background-color: #3182CE; /* Adjust the color to match your design */
+    background-color: #3182CE;
 }
 
 .buttonsContainer {

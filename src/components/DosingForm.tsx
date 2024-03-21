@@ -42,7 +42,7 @@ const DosingForm: React.FC = () => {
                     startingTime={formData.startingTime}
                 />
             </div>
-            <aside className="md:w-96 bg-gray-800 p-6 overflow-auto">
+            <aside className="md:w-96 bg-gray-800 p-6 overflow-auto max-h-[calc(100vh-60px)]">
                 <h1 className="text-4xl font-bold text-center mb-6">PillCurve</h1>
                 <PresetSelector
                     presets={presets}
