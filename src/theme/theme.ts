@@ -7,6 +7,9 @@ const theme = createTheme({
     primary: {
       main: '#63B3ED',
     },
+    secondary: {
+      main: '#F56565',
+    },
     text: {
       primary: '#FFFFFF',
       secondary: '#A0AEC0',
@@ -16,6 +19,7 @@ const theme = createTheme({
       default: '#1A202C',
       paper: '#2D3748',
     },
+    divider: '#4A5568',
   },
   typography: {
     fontFamily: 'inherit',

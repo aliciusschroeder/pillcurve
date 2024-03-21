@@ -4,6 +4,7 @@ import React from 'react';
 import { TextField, Button, IconButton } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { ThemeProvider } from '@mui/material/styles';
+import { FormSection, FormHeader } from './styledComponents';
 import theme from '../theme/theme';
 
 
@@ -32,8 +33,8 @@ const DoseInput: React.FC<DoseInputProps> = ({
 }) => {
     return (
         <ThemeProvider theme={theme}>
-          <section className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
-            <h2 className="text-2xl font-bold text-blue-400 mb-4">Dosierung</h2>
+          <FormSection>
+            <FormHeader>Dosierung</FormHeader>
             <form id="dosingForm" onSubmit={e => e.preventDefault()} className="space-y-4">
               <div id="doses" className="space-y-4">
                 {Array.from({ length: doseCount }, (_, index) => (
@@ -49,12 +50,18 @@ const DoseInput: React.FC<DoseInputProps> = ({
                         variant="outlined"
                         size="small"
                         InputProps={{
-                          className: 'text-white bg-gray-700',
-                          endAdornment: <span>mg</span>,
-                        }}
+                            style: {
+                              color: theme.palette.text.primary,
+                              backgroundColor: theme.palette.background.paper,
+                            },
+                            endAdornment: <span>mg</span>,
+                          }}
                         InputLabelProps={{
-                          className: 'text-gray-400',
+                            style: {
+                              color: theme.palette.text.secondary,
+                            },
                         }}
+                      
                       />
                     </div>
                     {index === 0 ? (
@@ -68,10 +75,15 @@ const DoseInput: React.FC<DoseInputProps> = ({
                           variant="outlined"
                           size="small"
                           InputProps={{
-                            className: 'text-white bg-gray-700',
+                            style: {
+                                color: theme.palette.text.primary,
+                                backgroundColor: theme.palette.background.paper,
+                              },                        
                           }}
                           InputLabelProps={{
-                            className: 'text-gray-400',
+                            style: {
+                                color: theme.palette.text.secondary,
+                              },                        
                           }}
                         />
                       </div>
@@ -87,12 +99,17 @@ const DoseInput: React.FC<DoseInputProps> = ({
                           variant="outlined"
                           size="small"
                           InputProps={{
-                            className: 'text-white bg-gray-700',
+                            style: {
+                              color: theme.palette.text.primary,
+                              backgroundColor: theme.palette.background.paper,
+                            },
                             endAdornment: <span>min</span>,
                           }}
-                          InputLabelProps={{
-                            className: 'text-gray-400',
-                          }}
+                        InputLabelProps={{
+                            style: {
+                              color: theme.palette.text.secondary,
+                            },
+                        }}
                         />
                       </div>
                     )}
@@ -113,7 +130,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
                 </Button>
               </div>
             </form>
-          </section>
+          </FormSection>
         </ThemeProvider>
       );    
 };

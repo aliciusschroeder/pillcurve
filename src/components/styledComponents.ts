@@ -5,7 +5,7 @@ import { styled } from '@mui/system';
 export const FormSection = styled('section')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   border: `1px solid ${theme.palette.divider}`,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: '#1A202C',
   padding: theme.spacing(3),
   marginBottom: theme.spacing(3),
 }));
