@@ -40,6 +40,8 @@ const DosingForm: React.FC = () => {
                     // tMax={formData.tMax}
                     concentrationData={concentrationData}
                     startingTime={formData.startingTime}
+                    times={formData.times}
+                    doses={formData.doses}
                 />
             </div>
             <aside className="md:w-96 bg-gray-800 p-6 overflow-auto max-h-[calc(100vh-60px)]">

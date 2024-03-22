@@ -6,7 +6,7 @@ export const FormSection = styled('section')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   border: `1px solid ${theme.palette.divider}`,
   backgroundColor: '#1A202C',
-  padding: theme.spacing(3),
+  padding: theme.spacing(2, 3),
   marginBottom: theme.spacing(3),
 }));
 
@@ -15,4 +15,5 @@ export const FormHeader = styled('h2')(({ theme }) => ({
   fontWeight: 700,
   color: theme.palette.primary.main,
   marginBottom: theme.spacing(2),
+  marginTop: theme.spacing(0),
 }));
