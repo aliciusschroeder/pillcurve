@@ -33,7 +33,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, starting
     }
     return startingTime === 1 || startingTime === -1
       ? `${dose} mg after ${time} min`
-      : `${dose} mg \n at ${getTime(time)}`;
+      : `${dose} mg at ${getTime(time)}`;
   };
 
   const getTime = (tickItem: number): string => {
