@@ -73,6 +73,8 @@ export const useDosingForm = () => {
         const totalMinutes = hours * 60 + minutes;
         updateFormData({ startingTime: totalMinutes });
       }
+    } else {
+      updateFormData({ startingTime: -1 });
     }
   };
 
