@@ -61,9 +61,11 @@ Contributions are welcome! I already have some ideas listed on my roadmap, but p
 
 ## Roadmap
 
+- ✅ DONE ~~Enable Custom Presets~~
 - Find a suitable data-source to make many presets available at once (or make it community driven)
-- Mark intake times in the graph
-- Display the actual time on the X-axis instead of minutes
+- ✅ DONE ~~Mark intake times in the graph~~
+- ✅ DONE ~~Display the actual time on the X-axis instead of minutes~~
+- Allow user to switch between entering additional intake times as relative time in minutes (currently supported) or as time of day (not supported yet)
 
 ## Contact
 
