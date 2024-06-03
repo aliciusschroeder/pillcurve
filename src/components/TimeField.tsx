@@ -6,11 +6,11 @@ import theme from '../theme/theme';
 
 interface TimeFieldProps {
   index: number;
-  time: number;
+  time?: number;
   onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TimeField: React.FC<TimeFieldProps> = ({ index, time, onTimeChange }) => (
+const TimeField: React.FC<TimeFieldProps> = ({ index, time = 0, onTimeChange }) => (
   <div className="md:w-1/2">
     <TextField
       label={`Zeit ${index + 1}`}
