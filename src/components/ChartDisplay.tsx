@@ -2,17 +2,13 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceDot, Label } from 'recharts';
 import moment from 'moment';
+import { IntakePoint } from '../types';
 
 interface ChartDisplayProps {
   concentrationData: number[];
   startingTime: number;
   times: number[];
   doses: number[];
-}
-
-interface IntakePoint {
-  time: number;
-  dose: number;
 }
 
 const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, startingTime, times, doses }) => {
