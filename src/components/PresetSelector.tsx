@@ -27,10 +27,6 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
 }) => {
   const selectedPresetData = getSelectedPreset();
 
-  const handlePresetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onSelectedPresetChange(event.target.value);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <FormSection>
