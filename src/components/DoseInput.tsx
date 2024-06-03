@@ -5,8 +5,10 @@ import { TextField, Button, IconButton } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { ThemeProvider } from '@mui/material/styles';
 import { FormSection, FormHeader } from './styledComponents';
+import DoseField from './DoseField';
+import TimeField from './TimeField';
+import StartingTimeField from './StartingTimeField';
 import theme from '../theme/theme';
-
 
 interface DoseInputProps {
   doseCount: number;
@@ -39,97 +41,21 @@ const DoseInput: React.FC<DoseInputProps> = ({
           <div id="doses" className="space-y-4">
             {Array.from({ length: doseCount }, (_, index) => (
               <div className="flex flex-col md:flex-row gap-4" key={index}>
-                <div className="md:w-1/2">
-                  <TextField
-                    label={`Dosis ${index + 1}`}
-                    type="number"
-                    name={`dose${index + 1}`}
-                    value={doses[index] || ''}
-                    onChange={onDoseChange}
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    InputProps={{
-                      style: {
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.background.paper,
-                      },
-                      endAdornment: <span>mg</span>,
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: theme.palette.text.secondary,
-                      },
-                    }}
-
-                  />
-                </div>
+                <DoseField index={index} dose={doses[index]} onDoseChange={onDoseChange} />
                 {index === 0 ? (
-                  <div className="md:w-1/2">
-                    <TextField
-                      label="Beginn"
-                      type="time"
-                      name="starting_time_picker"
-                      onChange={onStartingTimeChange}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{
-                        style: {
-                          color: theme.palette.text.primary,
-                          backgroundColor: theme.palette.background.paper,
-                        },
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          color: theme.palette.text.secondary,
-                        },
-                      }}
-                    />
-                  </div>
+                  <StartingTimeField onStartingTimeChange={onStartingTimeChange} />
                 ) : (
-                  <div className="md:w-1/2">
-                    <TextField
-                      label={`Zeit ${index + 1}`}
-                      type="number"
-                      name={`time${index + 1}`}
-                      value={times[index] || ''}
-                      onChange={onTimeChange}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      InputProps={{
-                        style: {
-                          color: theme.palette.text.primary,
-                          backgroundColor: theme.palette.background.paper,
-                        },
-                        endAdornment: <span>min</span>,
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          color: theme.palette.text.secondary,
-                        },
-                      }}
-                    />
-                  </div>
+                  <TimeField index={index} time={times[index]} onTimeChange={onTimeChange} />
                 )}
               </div>
             ))}
           </div>
           <div className="flex justify-between items-center mt-6">
             <div>
-              <IconButton
-                onClick={onAddDose}
-                color="primary"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', marginRight: '8px' }}
-              >
+              <IconButton onClick={onAddDose} color="primary" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', marginRight: '8px' }}>
                 <AddIcon />
               </IconButton>
-              <IconButton
-                onClick={onRemoveDose}
-                color="secondary"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-              >
+              <IconButton onClick={onRemoveDose} color="secondary" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
                 <RemoveIcon />
               </IconButton>
             </div>
