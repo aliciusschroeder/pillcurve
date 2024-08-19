@@ -3,7 +3,7 @@
 import { useFormState } from './useFormState';
 import { usePresetSelection } from './usePresetSelection';
 import { addDose, removeDose, updateDose } from '../utils/doseUtils';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { calculateConcentration } from '../utils/calculateConcentration';
 import { PresetOption } from '../types';
 
@@ -14,6 +14,7 @@ export const useDosingForm = () => {
   ];
 
   const { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData } = usePresetSelection(presets);
+
   const { formData, updateFormData } = useFormState({
     tMax: presets[0]!.tMax,
     halfLife: presets[0]!.halfLife,
@@ -22,18 +23,29 @@ export const useDosingForm = () => {
     times: [0],
   });
 
-  const memoizedGetSelectedPreset = useCallback(getSelectedPreset, []);
-  const memoizedUpdateFormData = useCallback(updateFormData, []);
-
   useEffect(() => {
-    const selectedPresetData = memoizedGetSelectedPreset();
+    const selectedPresetData = getSelectedPreset();
     if (selectedPresetData) {
-      memoizedUpdateFormData({
+      updateFormData({
         tMax: selectedPresetData.tMax,
         halfLife: selectedPresetData.halfLife,
       });
+      calculateConcentrationLocally();
     }
-  }, [selectedPreset, memoizedGetSelectedPreset, memoizedUpdateFormData]);
+  }, [selectedPreset, getSelectedPreset]);
+
+  const handlePresetChangeAndUpdate = (presetId: string) => {
+    handlePresetChange(presetId);
+    const newPresetData = presets.find(preset => preset.id === presetId);
+    if (newPresetData) {
+      updateFormData({
+        tMax: newPresetData.tMax,
+        halfLife: newPresetData.halfLife,
+      });
+      calculateConcentrationLocally();
+    }
+  };
+
 
   const [concentrationData, setConcentrationData] = useState<number[]>([]);
 
@@ -45,13 +57,13 @@ export const useDosingForm = () => {
 
   const handleDoseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const index = parseInt(name.match(/\d+/)?.[0] ?? '0', 10) - 1;
+    const index = parseInt(RegExp(/\d+/).exec(name)?.[0] ?? '0', 10) - 1;
     updateFormData(updateDose(formData.doses, formData.times, index, parseFloat(value), 'dose'));
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const index = parseInt(name.match(/\d+/)?.[0] ?? '0', 10) - 1;
+    const index = parseInt(RegExp(/\d+/).exec(name)?.[0] ?? '0', 10) - 1;
     updateFormData(updateDose(formData.doses, formData.times, index, parseFloat(value), 'time'));
   };
 
@@ -109,5 +121,6 @@ export const useDosingForm = () => {
     calculateConcentrationLocally,
     handleHalfLifeChange,
     handleTMaxChange,
+    handlePresetChangeAndUpdate,
   };
 };

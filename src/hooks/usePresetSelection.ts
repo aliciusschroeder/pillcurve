@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PresetOption } from '../types';
 
 export const usePresetSelection = (presets: PresetOption[]) => {
-  const [selectedPreset, setSelectedPreset] = useState<string>(presets[0]?.id || '');
+  const [selectedPreset, setSelectedPreset] = useState<string>(presets[0]?.id ?? '');
   const [customPresetData, setCustomPresetData] = useState<PresetOption>({
     id: 'custom',
     name: 'Custom',
@@ -28,3 +28,4 @@ export const usePresetSelection = (presets: PresetOption[]) => {
 
   return { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData };
 };
+
