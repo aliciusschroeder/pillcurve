@@ -21,7 +21,7 @@ const ChartCore: React.FC<ChartCoreProps> = ({ data, intakePoints, formatXAxis, 
         <Tooltip labelFormatter={formatXAxis} formatter={(value: number) => [Math.round(value), 'Concentration']} contentStyle={{ backgroundColor: '#2D3748', borderRadius: '4px', border: 'none' }} labelStyle={{ color: '#FFFFFF', fontWeight: 'bold' }} />
         <Line type="monotone" dataKey="concentration" stroke="#8884d8" strokeWidth={2} dot={false} isAnimationActive={false} />
         {intakePoints.map((intakePoint, index) => (
-          <ReferenceDot key={`intake-${index}`} x={intakePoint.time} y={concentrationData[intakePoint.time] || 0} r={6} fill="#63B3ED" stroke="#FFFFFF" strokeWidth={2}>
+          <ReferenceDot key={`intake-${index}`} x={intakePoint.time} y={concentrationData[intakePoint.time] ?? 0} r={6} fill="#63B3ED" stroke="#FFFFFF" strokeWidth={2}>
             <Label value={formatIntakeLabel(intakePoint)} position="top" fill="#FFFFFF" fontSize={12} />
           </ReferenceDot>
         ))}
