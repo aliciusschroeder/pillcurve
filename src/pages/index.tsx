@@ -1,11 +1,9 @@
-//src/pages/index.tsx
-
 import { CSSTransition } from 'react-transition-group';
 import { useState } from "react";
 import Link from "next/link";
 import { type NextPage } from "next";
 import Footer from '~/components/Footer';
-
+import styles from './index.module.css';
 
 const Home: NextPage = () => {
   const [showAlert, setShowAlert] = useState(0);
@@ -35,7 +33,7 @@ const Home: NextPage = () => {
             </div>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <CSSTransition in={true} appear={true} timeout={500} classNames="fade">
+            <CSSTransition in={true} appear={true} timeout={500} classNames={styles.fade}>
               <div className="transition-all transform hover:scale-110 duration-200 ease-in-out">
                 <Link href="/dosingform" className="block rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg p-10 text-white hover:text-gray-100 transition-colors duration-200">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-white animate-pulse"></div>
@@ -45,7 +43,7 @@ const Home: NextPage = () => {
                 </Link>
               </div>
             </CSSTransition>
-            <CSSTransition in={true} appear={true} timeout={700} classNames="fade">
+            <CSSTransition in={true} appear={true} timeout={700} classNames={styles.fade}>
               <div className="transition-all transform hover:scale-110 duration-200 ease-in-out">
                 <Link href="#" className="block rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg p-10 text-white hover:text-gray-100 transition-colors duration-200">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-white animate-pulse"></div>
@@ -62,24 +60,5 @@ const Home: NextPage = () => {
     </div>
   );
 }
-
-<style jsx global>{`
-.fade-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 500ms, transform 500ms;
-}
-.fade-exit {
-  opacity: 1;
-}
-.fade-exit.fade-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
-}
-`}</style>
 
 export default Home;
