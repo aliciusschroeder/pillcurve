@@ -41,6 +41,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         formatXAxis={formatXAxisWithStartingTime}
         formatIntakeLabel={formatIntakeLabelWithStartingTime}
         concentrationData={concentrationData}
+        startingTime={startingTime}
       />
     </ChartContainer>
   );

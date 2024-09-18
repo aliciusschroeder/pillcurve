@@ -1,4 +1,5 @@
 // ./components/ChartCore.tsx
+
 import React from "react";
 import {
   CartesianGrid,
@@ -19,6 +20,7 @@ interface ChartCoreProps {
   formatXAxis: (tickItem: number) => string;
   formatIntakeLabel: (intakePoint: IntakePoint) => string;
   concentrationData: number[];
+  startingTime: number;
 }
 
 const ChartCore: React.FC<ChartCoreProps> = ({
@@ -27,7 +29,24 @@ const ChartCore: React.FC<ChartCoreProps> = ({
   formatXAxis,
   formatIntakeLabel,
   concentrationData,
+  startingTime,
 }) => {
+  // Calculate the minimum and maximum times
+  const minTime = data[0]?.time ?? 0;
+  const maxTime = data[data.length - 1]?.time ?? 0;
+
+  // Generate ticks at every half-hour interval
+  const ticks = [];
+  const startTime = startingTime + minTime;
+  const endTime = startingTime + maxTime;
+  const tickInterval = 30; // in minutes
+
+  let tickTime = Math.ceil(startTime / tickInterval) * tickInterval;
+  while (tickTime <= endTime) {
+    ticks.push(tickTime - startingTime);
+    tickTime += tickInterval;
+  }
+
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data}>
@@ -35,7 +54,7 @@ const ChartCore: React.FC<ChartCoreProps> = ({
         <XAxis
           dataKey="time"
           tickFormatter={formatXAxis}
-          interval={29}
+          ticks={ticks}
           tick={{ fontSize: 12 }}
         />
         <YAxis domain={["auto", (dataMax: number) => dataMax * 1.01]} />
