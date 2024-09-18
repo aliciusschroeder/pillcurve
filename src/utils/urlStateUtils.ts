@@ -1,4 +1,4 @@
-import { FormData } from '../types';
+import { FormData } from "../types";
 
 interface UrlState extends FormData {
   selectedPreset: string;

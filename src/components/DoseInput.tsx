@@ -1,14 +1,14 @@
 // src/components/DoseInput.tsx
 
-import React from 'react';
-import { Button, IconButton } from '@mui/material';
-import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
-import { ThemeProvider } from '@mui/material/styles';
-import { FormSection, FormHeader } from './styledComponents';
-import DoseField from './DoseField';
-import TimeField from './TimeField';
-import StartingTimeField from './StartingTimeField';
-import theme from '../theme/theme';
+import { Add as AddIcon, Remove as RemoveIcon } from "@mui/icons-material";
+import { Button, IconButton } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import theme from "../theme/theme";
+import DoseField from "./DoseField";
+import StartingTimeField from "./StartingTimeField";
+import { FormHeader, FormSection } from "./styledComponents";
+import TimeField from "./TimeField";
 
 interface DoseInputProps {
   doseCount: number;
@@ -37,25 +37,50 @@ const DoseInput: React.FC<DoseInputProps> = ({
     <ThemeProvider theme={theme}>
       <FormSection>
         <FormHeader>Dosierung</FormHeader>
-        <form id="dosingForm" onSubmit={e => e.preventDefault()} className="space-y-4">
+        <form
+          id="dosingForm"
+          onSubmit={(e) => e.preventDefault()}
+          className="space-y-4"
+        >
           <div id="doses" className="space-y-4">
             {Array.from({ length: doseCount }, (_, index) => (
-              <div className="flex flex-col md:flex-row gap-4" key={index}>
-                <DoseField index={index} dose={doses[index] ?? 0} onDoseChange={onDoseChange} />
+              <div className="flex flex-col gap-4 md:flex-row" key={index}>
+                <DoseField
+                  index={index}
+                  dose={doses[index] ?? 0}
+                  onDoseChange={onDoseChange}
+                />
                 {index === 0 ? (
-                  <StartingTimeField onStartingTimeChange={onStartingTimeChange} />
+                  <StartingTimeField
+                    onStartingTimeChange={onStartingTimeChange}
+                  />
                 ) : (
-                  <TimeField index={index} time={times[index]} onTimeChange={onTimeChange} />
+                  <TimeField
+                    index={index}
+                    time={times[index]}
+                    onTimeChange={onTimeChange}
+                  />
                 )}
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center mt-6">
+          <div className="mt-6 flex items-center justify-between">
             <div>
-              <IconButton onClick={onAddDose} color="primary" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', marginRight: '8px' }}>
+              <IconButton
+                onClick={onAddDose}
+                color="primary"
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  marginRight: "8px",
+                }}
+              >
                 <AddIcon />
               </IconButton>
-              <IconButton onClick={onRemoveDose} color="secondary" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+              <IconButton
+                onClick={onRemoveDose}
+                color="secondary"
+                style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+              >
                 <RemoveIcon />
               </IconButton>
             </div>
@@ -66,10 +91,10 @@ const DoseInput: React.FC<DoseInputProps> = ({
               style={{
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.primary.contrastText,
-                fontWeight: 'bold',
-                borderRadius: '8px',
-                padding: '12px 24px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                fontWeight: "bold",
+                borderRadius: "8px",
+                padding: "12px 24px",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               }}
             >
               Berechnen

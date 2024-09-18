@@ -1,12 +1,12 @@
 // ./src/pages/dosingform.tsx
 
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import Footer from '~/components/Footer';
-import DosingForm from '../components/DosingForm';
-import presets from '../config/presets';
-import { encodeState } from '../utils/urlStateUtils';
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Footer from "~/components/Footer";
+import DosingForm from "../components/DosingForm";
+import presets from "../config/presets";
+import { encodeState } from "../utils/urlStateUtils";
 
 const DosingFormPage = () => {
   const router = useRouter();
@@ -16,13 +16,13 @@ const DosingFormPage = () => {
 
     if (!router.query.state) {
       if (presets.length === 0) {
-        console.error('No presets available');
+        console.error("No presets available");
         return;
       }
 
       try {
         const defaultState = encodeState({
-          selectedPreset: presets[0]?.id ?? 'custom',
+          selectedPreset: presets[0]?.id ?? "custom",
           tMax: presets[0]?.tMax ?? 42,
           halfLife: presets[0]?.halfLife ?? 42,
           startingTime: 1,
@@ -31,7 +31,7 @@ const DosingFormPage = () => {
         });
         router.replace(`?state=${defaultState}`, undefined, { shallow: true });
       } catch (error) {
-        console.error('Failed to encode state:', error);
+        console.error("Failed to encode state:", error);
       }
     }
   }, [router.isReady, router.query.state]);
@@ -44,11 +44,14 @@ const DosingFormPage = () => {
     <>
       <Head>
         <title>PillCurve</title>
-        <meta name="description" content="Handy tool to calculate remaining pill effects" />
+        <meta
+          name="description"
+          content="Handy tool to calculate remaining pill effects"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col min-h-screen">
-        <main className="flex-1 flex flex-col md:flex-row bg-gray-900 text-gray-100">
+      <div className="flex min-h-screen flex-col">
+        <main className="flex flex-1 flex-col bg-gray-900 text-gray-100 md:flex-row">
           <DosingForm />
         </main>
         <Footer />

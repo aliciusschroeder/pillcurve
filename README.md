@@ -2,7 +2,7 @@
 
 PillCurve is a web application designed to calculate the remaining effects of substances based on dosage and pharmacokinetics where you can enter individual timing and dosage schemes. Built with Next.js, TypeScript, and Tailwind CSS, it offers a sleek user interface and customizable calculations for various substances.
 
-*In my humble opinion, the tool I have developed fills a significant gap in the digital landscape, addressing a need that, based on my extensive research, has not been met by existing solutions on the internet. My hope is that it will save many of us a lot of head-scratching and calculations. However, I would like to emphasize that what you see today is merely the first prototype. This current iteration represents the minimal viable product — the very first buildable draft that transforms an idea into a functional web application. It's a starting point, a foundation upon which much more can be built and improved. Your understanding and feedback at this early stage are greatly appreciated as we embark on this exciting journey of development and refinement.*
+_In my humble opinion, the tool I have developed fills a significant gap in the digital landscape, addressing a need that, based on my extensive research, has not been met by existing solutions on the internet. My hope is that it will save many of us a lot of head-scratching and calculations. However, I would like to emphasize that what you see today is merely the first prototype. This current iteration represents the minimal viable product — the very first buildable draft that transforms an idea into a functional web application. It's a starting point, a foundation upon which much more can be built and improved. Your understanding and feedback at this early stage are greatly appreciated as we embark on this exciting journey of development and refinement._
 
 ## Features
 
@@ -55,9 +55,8 @@ Contributions are welcome! I already have some ideas listed on my roadmap, but p
 - **DosingForm.tsx**: The main form component handling the dosing logic.
 - **useDosingForm.ts**: A custom hook managing the state and logic of the dosing form.
 
-
-[//]: # (## License)
-[//]: # (This project is licensed under the  License - see the [LICENSE.md] file for details.)
+[//]: # "## License"
+[//]: # "This project is licensed under the  License - see the [LICENSE.md] file for details."
 
 ## Roadmap
 
@@ -72,5 +71,9 @@ Contributions are welcome! I already have some ideas listed on my roadmap, but p
 For support, feedback, or inquiries, please contact me via my profile (LinkedIn, IG, X).
 
 ---
+
 © 2023-2024 Alicius Schröder | [Visit GitHub repo](https://github.com/aliciusschroeder/pillcurve)
+
+```
+
 ```

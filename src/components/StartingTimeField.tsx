@@ -1,14 +1,16 @@
 // ./src/components/StartingTimeField.tsx
 
-import React from 'react';
-import { TextField } from '@mui/material';
-import theme from '../theme/theme';
+import { TextField } from "@mui/material";
+import React from "react";
+import theme from "../theme/theme";
 
 interface StartingTimeFieldProps {
   onStartingTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const StartingTimeField: React.FC<StartingTimeFieldProps> = ({ onStartingTimeChange }) => (
+const StartingTimeField: React.FC<StartingTimeFieldProps> = ({
+  onStartingTimeChange,
+}) => (
   <div className="md:w-1/2">
     <TextField
       label="Beginn"

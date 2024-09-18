@@ -1,8 +1,8 @@
 // ./src/components/DoseField.tsx
 
-import React from 'react';
-import { TextField } from '@mui/material';
-import theme from '../theme/theme';
+import { TextField } from "@mui/material";
+import React from "react";
+import theme from "../theme/theme";
 
 interface DoseFieldProps {
   index: number;
@@ -16,7 +16,7 @@ const DoseField: React.FC<DoseFieldProps> = ({ index, dose, onDoseChange }) => (
       label={`Dosis ${index + 1}`}
       type="number"
       name={`dose${index + 1}`}
-      value={dose || ''}
+      value={dose || ""}
       onChange={onDoseChange}
       fullWidth
       variant="outlined"

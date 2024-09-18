@@ -1,12 +1,14 @@
 // src/hooks/usePresetSelection.ts
-import { useState } from 'react';
-import { PresetOption } from '../types';
+import { useState } from "react";
+import { PresetOption } from "../types";
 
 export const usePresetSelection = (presets: PresetOption[]) => {
-  const [selectedPreset, setSelectedPreset] = useState<string>(presets[0]?.id ?? '');
+  const [selectedPreset, setSelectedPreset] = useState<string>(
+    presets[0]?.id ?? ""
+  );
   const [customPresetData, setCustomPresetData] = useState<PresetOption>({
-    id: 'custom',
-    name: 'Custom',
+    id: "custom",
+    name: "Custom",
     halfLife: 0,
     tMax: 0,
   });
@@ -16,7 +18,7 @@ export const usePresetSelection = (presets: PresetOption[]) => {
   };
 
   const getSelectedPreset = () => {
-    if (selectedPreset === 'custom') {
+    if (selectedPreset === "custom") {
       return customPresetData;
     }
     return presets.find((preset) => preset.id === selectedPreset);
@@ -26,6 +28,10 @@ export const usePresetSelection = (presets: PresetOption[]) => {
     setCustomPresetData((prevData) => ({ ...prevData, ...updates }));
   };
 
-  return { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData };
+  return {
+    selectedPreset,
+    handlePresetChange,
+    getSelectedPreset,
+    updateCustomPresetData,
+  };
 };
-

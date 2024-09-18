@@ -1,8 +1,8 @@
 // ./src/components/TimeField.tsx
 
-import React from 'react';
-import { TextField } from '@mui/material';
-import theme from '../theme/theme';
+import { TextField } from "@mui/material";
+import React from "react";
+import theme from "../theme/theme";
 
 interface TimeFieldProps {
   index: number;
@@ -10,13 +10,17 @@ interface TimeFieldProps {
   onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TimeField: React.FC<TimeFieldProps> = ({ index, time = 0, onTimeChange }) => (
+const TimeField: React.FC<TimeFieldProps> = ({
+  index,
+  time = 0,
+  onTimeChange,
+}) => (
   <div className="md:w-1/2">
     <TextField
       label={`Zeit ${index + 1}`}
       type="number"
       name={`time${index + 1}`}
-      value={time || ''}
+      value={time || ""}
       onChange={onTimeChange}
       fullWidth
       variant="outlined"

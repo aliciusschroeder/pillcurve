@@ -2,49 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 @media (min-width: 769px) {
-    html, body {
-        overflow-y: hidden;
-    }
+  html,
+  body {
+    overflow-y: hidden;
+  }
 }
 
-
 body {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 :root {
-    --primary: #f3f4f6;
-    --secondary: #2D3748/*rgba(26, 32, 44, 0.4)*/;
-    --tertiary: #1A202C /*rgba(26, 32, 44, 0.6)*/;
+  --primary: #f3f4f6;
+  --secondary: #2d3748 /*rgba(26, 32, 44, 0.4)*/;
+  --tertiary: #1a202c /*rgba(26, 32, 44, 0.6)*/;
 }
 
 * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--secondary) var(--primary);
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-    width: 17px;
+  width: 17px;
 }
 
 *::-webkit-scrollbar-track {
-    background: var(--primary);
-    border-radius: 5px;
+  background: var(--primary);
+  border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: var(--secondary);
-    border-radius: 14px;
-    border: 3px solid var(--primary);
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--tertiary);
+  background-color: var(--tertiary);
 }

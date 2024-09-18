@@ -1,21 +1,25 @@
 // ./src/hooks/useDosingForm.ts
 
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import presets from '../config/presets';
-import { calculateConcentration } from '../utils/calculateConcentration';
-import { addDose, removeDose, updateDose } from '../utils/doseUtils';
-import { decodeState, encodeState } from '../utils/urlStateUtils';
-import { useFormState } from './useFormState';
-import { usePresetSelection } from './usePresetSelection';
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import presets from "../config/presets";
+import { calculateConcentration } from "../utils/calculateConcentration";
+import { addDose, removeDose, updateDose } from "../utils/doseUtils";
+import { decodeState, encodeState } from "../utils/urlStateUtils";
+import { useFormState } from "./useFormState";
+import { usePresetSelection } from "./usePresetSelection";
 
 export const useDosingForm = () => {
   const router = useRouter();
   const [concentrationData, setConcentrationData] = useState<number[]>([]);
   const [initialStateLoaded, setInitialStateLoaded] = useState(false);
 
-  const { selectedPreset, handlePresetChange, getSelectedPreset, updateCustomPresetData } =
-    usePresetSelection(presets);
+  const {
+    selectedPreset,
+    handlePresetChange,
+    getSelectedPreset,
+    updateCustomPresetData,
+  } = usePresetSelection(presets);
 
   const { formData, updateFormData } = useFormState({
     selectedPreset: presets[0]!.id,
@@ -43,17 +47,23 @@ export const useDosingForm = () => {
       });
       calculateConcentrationLocally();
     }
-  }, [selectedPreset, getSelectedPreset, updateFormData, calculateConcentrationLocally, initialStateLoaded]);
+  }, [
+    selectedPreset,
+    getSelectedPreset,
+    updateFormData,
+    calculateConcentrationLocally,
+    initialStateLoaded,
+  ]);
 
   // Load initial state from URL query parameters
   useEffect(() => {
     if (router.isReady && !initialStateLoaded) {
       const { query } = router;
-      if (query.state && typeof query.state === 'string') {
+      if (query.state && typeof query.state === "string") {
         const decodedState = decodeState(query.state);
         updateFormData(decodedState);
         handlePresetChange(decodedState.selectedPreset);
-        if (decodedState.selectedPreset === 'custom') {
+        if (decodedState.selectedPreset === "custom") {
           updateCustomPresetData({
             halfLife: decodedState.halfLife,
             tMax: decodedState.tMax,
@@ -84,7 +94,7 @@ export const useDosingForm = () => {
   const handlePresetChangeAndUpdate = useCallback(
     (presetId: string) => {
       handlePresetChange(presetId);
-      const newPresetData = presets.find(preset => preset.id === presetId);
+      const newPresetData = presets.find((preset) => preset.id === presetId);
       if (newPresetData) {
         updateFormData({
           tMax: newPresetData.tMax,
@@ -103,9 +113,17 @@ export const useDosingForm = () => {
       const indexMatch = /\d+/.exec(name);
       const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
       if (index >= 0) {
-        updateFormData(updateDose(formData.doses, formData.times, index, parseFloat(value), 'dose'));
+        updateFormData(
+          updateDose(
+            formData.doses,
+            formData.times,
+            index,
+            parseFloat(value),
+            "dose"
+          )
+        );
       } else {
-        console.error('Invalid index for dose change');
+        console.error("Invalid index for dose change");
       }
     },
     [formData.doses, formData.times, updateFormData]
@@ -117,9 +135,17 @@ export const useDosingForm = () => {
       const indexMatch = /\d+/.exec(name);
       const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
       if (index >= 0) {
-        updateFormData(updateDose(formData.doses, formData.times, index, parseFloat(value), 'time'));
+        updateFormData(
+          updateDose(
+            formData.doses,
+            formData.times,
+            index,
+            parseFloat(value),
+            "time"
+          )
+        );
       } else {
-        console.error('Invalid index for time change');
+        console.error("Invalid index for time change");
       }
     },
     [formData.doses, formData.times, updateFormData]
@@ -137,11 +163,11 @@ export const useDosingForm = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
 
-      if (value.includes(':')) {
+      if (value.includes(":")) {
         // Input is in HH:MM format
-        const parts = value.split(':');
-        const hours = parseInt(parts[0] ?? '', 10);
-        const minutes = parseInt(parts[1] ?? '', 10);
+        const parts = value.split(":");
+        const hours = parseInt(parts[0] ?? "", 10);
+        const minutes = parseInt(parts[1] ?? "", 10);
         if (!isNaN(hours) && !isNaN(minutes)) {
           const totalMinutes = hours * 60 + minutes;
           updateFormData({ startingTime: totalMinutes });
@@ -164,8 +190,8 @@ export const useDosingForm = () => {
   const handleHalfLifeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newHalfLife = parseFloat(e.target.value);
-      if (selectedPreset !== 'custom') {
-        handlePresetChange('custom');
+      if (selectedPreset !== "custom") {
+        handlePresetChange("custom");
       }
       updateCustomPresetData({ halfLife: newHalfLife });
       updateFormData({ halfLife: newHalfLife });
@@ -176,8 +202,8 @@ export const useDosingForm = () => {
   const handleTMaxChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newTMax = parseFloat(e.target.value);
-      if (selectedPreset !== 'custom') {
-        handlePresetChange('custom');
+      if (selectedPreset !== "custom") {
+        handlePresetChange("custom");
       }
       updateCustomPresetData({ tMax: newTMax });
       updateFormData({ tMax: newTMax });

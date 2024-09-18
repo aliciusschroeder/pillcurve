@@ -1,12 +1,11 @@
 // src/components/PresetSelector.tsx
 
-import React from 'react';
-import { PresetOption } from '../types';
-import { TextField, MenuItem } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { FormSection, FormHeader } from './styledComponents';
-import theme from '../theme/theme';
-
+import { MenuItem, TextField } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import theme from "../theme/theme";
+import { PresetOption } from "../types";
+import { FormHeader, FormSection } from "./styledComponents";
 
 interface PresetSelectorProps {
   presets: PresetOption[];
@@ -60,13 +59,20 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
             <MenuItem value="custom">Custom</MenuItem>
           </TextField>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: theme.spacing(2), marginTop: theme.spacing(2) }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: theme.spacing(2),
+            marginTop: theme.spacing(2),
+          }}
+        >
           <TextField
             label="Half-Life"
             type="number"
-            value={selectedPresetData?.halfLife ?? ''}
+            value={selectedPresetData?.halfLife ?? ""}
             onChange={onHalfLifeChange}
-            disabled={selectedPreset !== 'custom'}
+            disabled={selectedPreset !== "custom"}
             fullWidth
             variant="outlined"
             size="small"
@@ -86,9 +92,9 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
           <TextField
             label="t_Max"
             type="number"
-            value={selectedPresetData?.tMax ?? ''}
+            value={selectedPresetData?.tMax ?? ""}
             onChange={onTMaxChange}
-            disabled={selectedPreset !== 'custom'}
+            disabled={selectedPreset !== "custom"}
             fullWidth
             variant="outlined"
             size="small"
@@ -110,7 +116,5 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
     </ThemeProvider>
   );
 };
-
-
 
 export default PresetSelector;

@@ -1,11 +1,9 @@
 //src/components/ChartDisplay.tsx
-import React from 'react';
-import { IntakePoint } from '../types';
-import { formatIntakeLabel, formatXAxis } from '../utils/formatters';
-import ChartContainer from './ChartContainer';
-import ChartCore from './ChartCore';
-
-
+import React from "react";
+import { IntakePoint } from "../types";
+import { formatIntakeLabel, formatXAxis } from "../utils/formatters";
+import ChartContainer from "./ChartContainer";
+import ChartCore from "./ChartCore";
 
 interface ChartDisplayProps {
   concentrationData: number[];
@@ -14,7 +12,12 @@ interface ChartDisplayProps {
   doses: number[];
 }
 
-const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, startingTime, times, doses }) => {
+const ChartDisplay: React.FC<ChartDisplayProps> = ({
+  concentrationData,
+  startingTime,
+  times,
+  doses,
+}) => {
   const data = concentrationData.map((concentration, index) => ({
     time: index,
     concentration,
@@ -25,13 +28,20 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ concentrationData, starting
     dose: doses[index] || 0,
   }));
 
-  const formatXAxisWithStartingTime = (tickItem: number) => formatXAxis(tickItem, startingTime);
-  const formatIntakeLabelWithStartingTime = (intakePoint: IntakePoint) => formatIntakeLabel(intakePoint, startingTime);
-
+  const formatXAxisWithStartingTime = (tickItem: number) =>
+    formatXAxis(tickItem, startingTime);
+  const formatIntakeLabelWithStartingTime = (intakePoint: IntakePoint) =>
+    formatIntakeLabel(intakePoint, startingTime);
 
   return (
     <ChartContainer>
-            <ChartCore data={data} intakePoints={intakePoints} formatXAxis={formatXAxisWithStartingTime} formatIntakeLabel={formatIntakeLabelWithStartingTime} concentrationData={concentrationData} />
+      <ChartCore
+        data={data}
+        intakePoints={intakePoints}
+        formatXAxis={formatXAxisWithStartingTime}
+        formatIntakeLabel={formatIntakeLabelWithStartingTime}
+        concentrationData={concentrationData}
+      />
     </ChartContainer>
   );
 };

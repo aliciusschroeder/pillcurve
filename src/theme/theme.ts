@@ -1,40 +1,40 @@
 // src/theme/theme.ts
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#63B3ED',
+      main: "#63B3ED",
     },
     secondary: {
-      main: '#F56565',
+      main: "#F56565",
     },
     text: {
-      primary: '#FFFFFF',
-      secondary: '#A0AEC0',
-      disabled: '#4A5568',
+      primary: "#FFFFFF",
+      secondary: "#A0AEC0",
+      disabled: "#4A5568",
     },
     background: {
-      default: '#1A202C',
-      paper: '#2D3748',
+      default: "#1A202C",
+      paper: "#2D3748",
     },
-    divider: '#4A5568',
+    divider: "#4A5568",
   },
   typography: {
-    fontFamily: 'inherit',
+    fontFamily: "inherit",
   },
   components: {
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: '#FFFFFF',
-          backgroundColor: '#2D3748',
-          '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+          color: "#FFFFFF",
+          backgroundColor: "#2D3748",
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.08)",
           },
-          '&.Mui-selected': {
-            backgroundColor: 'rgba(255, 255, 255, 0.16)',
+          "&.Mui-selected": {
+            backgroundColor: "rgba(255, 255, 255, 0.16)",
           },
         },
       },
@@ -42,28 +42,28 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          '& .MuiInputBase-input': {
-            color: '#FFFFFF',
+          "& .MuiInputBase-input": {
+            color: "#FFFFFF",
           },
-          '& .MuiInputBase-input.Mui-disabled': {
-            color: '#4A5568',
-            WebkitTextFillColor: '#4A5568',
+          "& .MuiInputBase-input.Mui-disabled": {
+            color: "#4A5568",
+            WebkitTextFillColor: "#4A5568",
           },
-          '& .MuiInputLabel-root': {
-            color: '#A0AEC0',
+          "& .MuiInputLabel-root": {
+            color: "#A0AEC0",
           },
-          '& .MuiInputLabel-root.Mui-disabled': {
-            color: '#4A5568',
+          "& .MuiInputLabel-root.Mui-disabled": {
+            color: "#4A5568",
           },
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: '#2D3748',
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#2D3748",
             },
-            '&:hover fieldset': {
-              borderColor: '#4A5568',
+            "&:hover fieldset": {
+              borderColor: "#4A5568",
             },
-            '&.Mui-focused fieldset': {
-              borderColor: '#63B3ED',
+            "&.Mui-focused fieldset": {
+              borderColor: "#63B3ED",
             },
           },
         },
@@ -72,7 +72,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: '#FFFFFF',
+          color: "#FFFFFF",
         },
       },
     },
