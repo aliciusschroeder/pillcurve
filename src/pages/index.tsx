@@ -8,6 +8,9 @@ import Footer from "~/components/Footer";
 import styles from "./index.module.css";
 
 const Home: NextPage = () => {
+  /* Please Note: showAlert is currently without function and the conditions
+     below are intentionally unreachable. This might come handy should we decide to implement
+     functions requiring external API's based on a bring-your-own-key model */
   const [showAlert, setShowAlert] = useState(0);
 
   return (
