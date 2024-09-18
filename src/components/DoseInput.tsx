@@ -2,7 +2,6 @@
 
 import { Add as AddIcon, Remove as RemoveIcon } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import theme from "../theme/theme";
 import DoseField from "./DoseField";
@@ -34,75 +33,73 @@ const DoseInput: React.FC<DoseInputProps> = ({
   onCalculateClick,
 }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <FormSection>
-        <FormHeader>Dosierung</FormHeader>
-        <form
-          id="dosingForm"
-          onSubmit={(e) => e.preventDefault()}
-          className="space-y-4"
-        >
-          <div id="doses" className="space-y-4">
-            {Array.from({ length: doseCount }, (_, index) => (
-              <div className="flex flex-col gap-4 md:flex-row" key={index}>
-                <DoseField
-                  index={index}
-                  dose={doses[index] ?? 0}
-                  onDoseChange={onDoseChange}
+    <FormSection>
+      <FormHeader>Dosierung</FormHeader>
+      <form
+        id="dosingForm"
+        onSubmit={(e) => e.preventDefault()}
+        className="space-y-4"
+      >
+        <div id="doses" className="space-y-4">
+          {Array.from({ length: doseCount }, (_, index) => (
+            <div className="flex flex-col gap-4 md:flex-row" key={index}>
+              <DoseField
+                index={index}
+                dose={doses[index] ?? 0}
+                onDoseChange={onDoseChange}
+              />
+              {index === 0 ? (
+                <StartingTimeField
+                  onStartingTimeChange={onStartingTimeChange}
                 />
-                {index === 0 ? (
-                  <StartingTimeField
-                    onStartingTimeChange={onStartingTimeChange}
-                  />
-                ) : (
-                  <TimeField
-                    index={index}
-                    time={times[index]}
-                    onTimeChange={onTimeChange}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex items-center justify-between">
-            <div>
-              <IconButton
-                onClick={onAddDose}
-                color="primary"
-                style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  marginRight: "8px",
-                }}
-              >
-                <AddIcon />
-              </IconButton>
-              <IconButton
-                onClick={onRemoveDose}
-                color="secondary"
-                style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-              >
-                <RemoveIcon />
-              </IconButton>
+              ) : (
+                <TimeField
+                  index={index}
+                  time={times[index]}
+                  onTimeChange={onTimeChange}
+                />
+              )}
             </div>
-            <Button
-              variant="contained"
+          ))}
+        </div>
+        <div className="mt-6 flex items-center justify-between">
+          <div>
+            <IconButton
+              onClick={onAddDose}
               color="primary"
-              onClick={onCalculateClick}
               style={{
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.primary.contrastText,
-                fontWeight: "bold",
-                borderRadius: "8px",
-                padding: "12px 24px",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                marginRight: "8px",
               }}
             >
-              Berechnen
-            </Button>
+              <AddIcon />
+            </IconButton>
+            <IconButton
+              onClick={onRemoveDose}
+              color="secondary"
+              style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+            >
+              <RemoveIcon />
+            </IconButton>
           </div>
-        </form>
-      </FormSection>
-    </ThemeProvider>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onCalculateClick}
+            style={{
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              fontWeight: "bold",
+              borderRadius: "8px",
+              padding: "12px 24px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            Berechnen
+          </Button>
+        </div>
+      </form>
+    </FormSection>
   );
 };
 
