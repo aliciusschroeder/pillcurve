@@ -76,54 +76,45 @@ export const useDosingForm = () => {
     [handlePresetChange, updateFormData, calculateConcentrationLocally]
   );
 
-  const handleDoseChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Higher-order function that returns an event handler for input changes in dose or time fields.
+   *
+   * This function generalizes the handling of input changes for doses and times.
+   * It parses the input value, validates it, extracts the index from the input name,
+   * and updates the form data accordingly.
+   *
+   * @param {"dose" | "time"} type - The type of input field ("dose" or "time").
+   * @returns {function} An event handler for the specified input type.
+   */
+  const handleInputChange = useCallback(
+    (type: "dose" | "time") => (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
-      const doseValue = parseFloat(value);
-      if (isNaN(doseValue) || doseValue < 0) {
+      const parsedValue = parseFloat(value);
+      // Ignore invalid or negative values for dose
+      if (isNaN(parsedValue) || (type === "dose" && parsedValue < 0)) {
         return;
       }
+      // Extract the index from the input field's name (e.g., 'dose1' or 'time1' -> index 0)
       const indexMatch = /\d+/.exec(name);
       const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
       if (index >= 0) {
         updateFormData(
-          updateDose(
-            formData.doses,
-            formData.times,
-            index,
-            doseValue,
-            "dose"
-          )
+          updateDose(formData.doses, formData.times, index, parsedValue, type)
         );
       } else {
-        console.error("Invalid index for dose change");
+        console.error(`Invalid index for ${type} change`);
       }
     },
     [formData.doses, formData.times, updateFormData]
   );
 
-  const handleTimeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      const indexMatch = /\d+/.exec(name);
-      const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
-      if (index >= 0) {
-        updateFormData(
-          updateDose(
-            formData.doses,
-            formData.times,
-            index,
-            parseFloat(value),
-            "time"
-          )
-        );
-      } else {
-        console.error("Invalid index for time change");
-      }
-    },
-    [formData.doses, formData.times, updateFormData]
-  );
+  const handleDoseChange = handleInputChange("dose");
+  const handleTimeChange = handleInputChange("time");
 
+
+  /**
+   * Adds a new dose and time field to the form.
+   */
   const handleAddDose = useCallback(() => {
     updateFormData(addDose(formData.doses, formData.times));
   }, [formData.doses, formData.times, updateFormData]);
@@ -132,29 +123,32 @@ export const useDosingForm = () => {
     updateFormData(removeDose(formData.doses, formData.times));
   }, [formData.doses, formData.times, updateFormData]);
 
-  const handleHalfLifeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newHalfLife = parseFloat(e.target.value);
+  /**
+   * Higher-order function that returns an event handler for changes in preset values (half-life or tMax).
+   *
+   * This function generalizes the handling of changes for half-life and tMax inputs.
+   * It switches to the custom preset if a predefined preset is selected,
+   * updates the custom preset data and form data with the new value.
+   *
+   * @param {"halfLife" | "tMax"} key - The key in the form data to update.
+   * @returns {function} An event handler for the specified preset value.
+   */
+  const handlePresetValueChange = useCallback(
+    (key: "halfLife" | "tMax") => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = parseFloat(e.target.value);
+      // Switch to custom preset if a predefined preset is selected
       if (selectedPreset !== "custom") {
         handlePresetChange("custom");
       }
-      updateCustomPresetData({ halfLife: newHalfLife });
-      updateFormData({ halfLife: newHalfLife });
+      // Update custom preset data and form data
+      updateCustomPresetData({ [key]: newValue });
+      updateFormData({ [key]: newValue });
     },
     [selectedPreset, handlePresetChange, updateCustomPresetData, updateFormData]
   );
 
-  const handleTMaxChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newTMax = parseFloat(e.target.value);
-      if (selectedPreset !== "custom") {
-        handlePresetChange("custom");
-      }
-      updateCustomPresetData({ tMax: newTMax });
-      updateFormData({ tMax: newTMax });
-    },
-    [selectedPreset, handlePresetChange, updateCustomPresetData, updateFormData]
-  );
+  const handleHalfLifeChange = handlePresetValueChange("halfLife");
+  const handleTMaxChange = handlePresetValueChange("tMax");
 
   return {
     // Data
