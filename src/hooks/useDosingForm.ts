@@ -110,6 +110,10 @@ export const useDosingForm = () => {
   const handleDoseChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
+      const doseValue = parseFloat(value);
+      if (isNaN(doseValue) || doseValue < 0) {
+        return;
+      }
       const indexMatch = /\d+/.exec(name);
       const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
       if (index >= 0) {
@@ -118,7 +122,7 @@ export const useDosingForm = () => {
             formData.doses,
             formData.times,
             index,
-            parseFloat(value),
+            doseValue,
             "dose"
           )
         );
