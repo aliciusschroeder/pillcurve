@@ -6,22 +6,28 @@ import ChartDisplay from "./ChartDisplay";
 import DoseInput from "./DoseInput";
 import PresetSelector from "./PresetSelector";
 
+
 const DosingForm: React.FC = () => {
   const {
     presets,
     selectedPreset,
-    handlePresetChange,
-    getSelectedPreset,
     formData,
+    concentrationData,
+    startingTimeInput,
+
+    handleStartingTimeChange,
     handleDoseChange,
     handleTimeChange,
     handleAddDose,
     handleRemoveDose,
-    handleStartingTimeChange,
-    concentrationData,
-    calculateConcentrationLocally,
+    handlePresetChange,
     handleHalfLifeChange,
     handleTMaxChange,
+
+    getSelectedPreset,
+    calculateConcentrationLocally,
+    
+    
   } = useDosingForm();
 
   const handleCalculateClick = useCallback(() => {
@@ -52,11 +58,12 @@ const DosingForm: React.FC = () => {
           doseCount={formData.doses.length}
           doses={formData.doses}
           times={formData.times}
+          startingTime={startingTimeInput}
+          onStartingTimeChange={handleStartingTimeChange}
           onDoseChange={handleDoseChange}
           onTimeChange={handleTimeChange}
           onAddDose={handleAddDose}
           onRemoveDose={handleRemoveDose}
-          onStartingTimeChange={handleStartingTimeChange}
           onCalculateClick={handleCalculateClick}
         />
       </aside>

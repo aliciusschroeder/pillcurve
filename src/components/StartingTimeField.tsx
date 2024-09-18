@@ -5,10 +5,12 @@ import React from "react";
 import theme from "../theme/theme";
 
 interface StartingTimeFieldProps {
+  startingTime: string;
   onStartingTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const StartingTimeField: React.FC<StartingTimeFieldProps> = ({
+  startingTime,
   onStartingTimeChange,
 }) => (
   <div className="md:w-1/2">
@@ -16,6 +18,7 @@ const StartingTimeField: React.FC<StartingTimeFieldProps> = ({
       label="Beginn"
       type="time"
       name="starting_time_picker"
+      value={startingTime}
       onChange={onStartingTimeChange}
       fullWidth
       variant="outlined"

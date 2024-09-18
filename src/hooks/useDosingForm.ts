@@ -1,5 +1,6 @@
 // ./src/hooks/useDosingForm.ts
 
+import moment from "moment";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import presets from "../config/presets";
@@ -13,14 +14,6 @@ export const useDosingForm = () => {
   const router = useRouter();
   const [concentrationData, setConcentrationData] = useState<number[]>([]);
   const [initialStateLoaded, setInitialStateLoaded] = useState(false);
-
-  const {
-    selectedPreset,
-    handlePresetChange,
-    getSelectedPreset,
-    updateCustomPresetData,
-  } = usePresetSelection(presets);
-
   const { formData, updateFormData } = useFormState({
     selectedPreset: presets[0]!.id,
     tMax: presets[0]!.tMax,
@@ -29,12 +22,41 @@ export const useDosingForm = () => {
     doses: [100],
     times: [0],
   });
+  const [startingTimeInput, setStartingTimeInput] = useState<string>(() => {
+    const initialStartingTime =
+      formData.startingTime >= 0
+        ? moment()
+          .startOf("day")
+          .add(formData.startingTime, "minutes")
+          .format("HH:mm")
+        : "";
+    return initialStartingTime;
+  });
+
+
+  const {
+    selectedPreset,
+    handlePresetChange,
+    getSelectedPreset,
+    updateCustomPresetData,
+  } = usePresetSelection(presets);
 
   const calculateConcentrationLocally = useCallback(() => {
     const { halfLife, tMax, doses, times, startingTime } = formData;
     const concentration = calculateConcentration(halfLife, tMax, doses, times);
     setConcentrationData(concentration);
   }, [formData]);
+
+  // Update startingTimeInput when formData.startingTime changes
+  useEffect(() => {
+    if (formData.startingTime >= 0) {
+      const formattedTime = moment()
+        .startOf("day")
+        .add(formData.startingTime, "minutes")
+        .format("HH:mm");
+      setStartingTimeInput(formattedTime);
+    }
+  }, [formData.startingTime]);
 
   // Update form data when selected preset changes
   useEffect(() => {
@@ -166,30 +188,27 @@ export const useDosingForm = () => {
   const handleStartingTimeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
+      setStartingTimeInput(value);
 
-      if (value.includes(":")) {
-        // Input is in HH:MM format
-        const parts = value.split(":");
-        const hours = parseInt(parts[0] ?? "", 10);
-        const minutes = parseInt(parts[1] ?? "", 10);
-        if (!isNaN(hours) && !isNaN(minutes)) {
-          const totalMinutes = hours * 60 + minutes;
-          updateFormData({ startingTime: totalMinutes });
-        } else {
-          updateFormData({ startingTime: -1 }); // Invalid input
-        }
-      } else {
-        // Input is already in minutes
-        const startingTime = parseInt(value, 10);
-        if (!isNaN(startingTime)) {
-          updateFormData({ startingTime });
-        } else {
-          updateFormData({ startingTime: -1 }); // Invalid input
-        }
+      const [hoursStr, minutesStr] = value.split(":");
+      const hours = parseInt(hoursStr ?? "", 10);
+      const minutes = parseInt(minutesStr ?? "", 10);
+      if (
+        !isNaN(hours) &&
+        !isNaN(minutes) &&
+        hours >= 0 &&
+        hours < 24 &&
+        minutes >= 0 &&
+        minutes < 60
+      ) {
+        const totalMinutes = hours * 60 + minutes;
+        updateFormData({ startingTime: totalMinutes });
       }
+      // Do not update formData.startingTime if input is invalid
     },
     [updateFormData]
   );
+
 
   const handleHalfLifeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,20 +235,26 @@ export const useDosingForm = () => {
   );
 
   return {
+    // Data
     presets,
     selectedPreset,
-    handlePresetChange: handlePresetChangeAndUpdate,
-    getSelectedPreset,
     formData,
-    updateFormData,
+    concentrationData,
+    startingTimeInput,
+
+    // Input Handlers
+    handleStartingTimeChange,
     handleDoseChange,
     handleTimeChange,
     handleAddDose,
     handleRemoveDose,
-    handleStartingTimeChange,
-    concentrationData,
-    calculateConcentrationLocally,
+    handlePresetChange: handlePresetChangeAndUpdate,
     handleHalfLifeChange,
     handleTMaxChange,
+
+    // Utilities
+    getSelectedPreset,
+    // updateFormData,
+    calculateConcentrationLocally,
   };
 };

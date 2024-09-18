@@ -13,6 +13,7 @@ interface DoseInputProps {
   doseCount: number;
   doses: number[];
   times: number[];
+  startingTime: string;
   onDoseChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onAddDose: () => void;
@@ -25,6 +26,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
   doseCount,
   doses,
   times,
+  startingTime,
   onDoseChange,
   onTimeChange,
   onAddDose,
@@ -50,6 +52,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
               />
               {index === 0 ? (
                 <StartingTimeField
+                  startingTime={startingTime}
                   onStartingTimeChange={onStartingTimeChange}
                 />
               ) : (
