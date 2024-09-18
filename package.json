@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
@@ -44,6 +45,5 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.23.2"
-  },
-  "packageManager": "npm@9.6.7"
+  }
 }
