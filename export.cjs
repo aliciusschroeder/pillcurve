@@ -5,6 +5,7 @@ const ignoredFolders = ['node_modules', '.next', '.git'];
 const ignoredFiles = ['pnpm-lock.yaml', 'whole_project.txt', 'export.cjs', 'next-env.d.ts'];
 const includedExtensions = ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss', '.html', '.json'];
 
+// @ts-ignore
 function getAllFiles(dirPath, arrayOfFiles) {
   const files = fs.readdirSync(dirPath);
 
@@ -29,6 +30,7 @@ function getAllFiles(dirPath, arrayOfFiles) {
 const allFiles = getAllFiles(__dirname);
 let output = '';
 
+// @ts-ignore
 allFiles.forEach((file) => {
   const content = fs.readFileSync(file, 'utf-8');
   output += `===== ${path.basename(file)} =====\n==Path: ${path.relative(__dirname, file)}==\n${content}\n\n\n`;
