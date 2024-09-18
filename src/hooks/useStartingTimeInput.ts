@@ -1,7 +1,7 @@
 // src/hooks/useStartingTimeInput.ts
 
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useStartingTimeInput = (
   startingTime: number,
@@ -11,32 +11,27 @@ export const useStartingTimeInput = (
     const initialStartingTime =
       startingTime >= 0
         ? moment()
-            .startOf("day")
-            .add(startingTime, "minutes")
-            .format("HH:mm")
+          .startOf("day")
+          .add(startingTime, "minutes")
+          .format("HH:mm")
         : "";
     return initialStartingTime;
   });
 
-  const handleStartingTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setStartingTimeInput(value);
+  const handleStartingTimeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setStartingTimeInput(value);
 
-    const [hoursStr, minutesStr] = value.split(":");
-    const hours = parseInt(hoursStr ?? "", 10);
-    const minutes = parseInt(minutesStr ?? "", 10);
-    if (
-      !isNaN(hours) &&
-      !isNaN(minutes) &&
-      hours >= 0 &&
-      hours < 24 &&
-      minutes >= 0 &&
-      minutes < 60
-    ) {
-      const totalMinutes = hours * 60 + minutes;
-      updateFormData({ startingTime: totalMinutes });
-    }
-  };
+      const time = moment(value, "HH:mm");
+      if (time.isValid()) {
+        const totalMinutes = time.hours() * 60 + time.minutes();
+        updateFormData({ startingTime: totalMinutes });
+      }
+    },
+    [updateFormData]
+  );
+
 
   // Aktualisiere die Eingabe, wenn sich die Startzeit ändert
   useEffect(() => {
