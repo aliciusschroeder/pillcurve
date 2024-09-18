@@ -9,7 +9,21 @@ import { usePresetSelection } from "./usePresetSelection";
 import { useStartingTimeInput } from "./useStartingTimeInput";
 import { useUrlState } from "./useUrlState";
 
+/**
+ * Custom hook that manages the state and logic for the dosing form.
+ *
+ * This hook integrates several sub-hooks and utility functions to handle:
+ * - Form state management
+ * - Preset selection and customization
+ * - Calculating drug concentration over time
+ * - Synchronizing form state with URL parameters
+ * - Managing starting time input
+ * - Handling user interactions (e.g., adding/removing doses, changing inputs)
+ *
+ * @returns {object} An object containing form data, event handlers, and utilities.
+ */
 export const useDosingForm = () => {
+  // Initialize form state with default values or presets
   const { formData, updateFormData } = useFormState({
     selectedPreset: presets[0]!.id,
     tMax: presets[0]!.tMax,
@@ -19,6 +33,7 @@ export const useDosingForm = () => {
     times: [0],
   });
 
+  // Manage preset selection and custom preset data
   const {
     selectedPreset,
     handlePresetChange,
@@ -26,9 +41,11 @@ export const useDosingForm = () => {
     updateCustomPresetData,
   } = usePresetSelection(presets);
 
+  // Calculate concentration data based on form inputs
   const { concentrationData, calculateConcentrationLocally } =
     useConcentrationData(formData);
 
+  // Synchronize form state with URL parameters
   const { initialStateLoaded } = useUrlState(
     formData,
     updateFormData,
@@ -37,11 +54,13 @@ export const useDosingForm = () => {
     calculateConcentrationLocally
   );
 
+  // Manage starting time input and conversion to internal format
   const { startingTimeInput, handleStartingTimeChange } = useStartingTimeInput(
     formData.startingTime,
     updateFormData
   );
 
+  // Effect to update form data when the selected preset changes
   useEffect(() => {
     const selectedPresetData = getSelectedPreset();
     if (selectedPresetData && initialStateLoaded) {
@@ -60,6 +79,15 @@ export const useDosingForm = () => {
     initialStateLoaded,
   ]);
 
+  /**
+   * Handles the change of preset selection and updates form data accordingly.
+   *
+   * This function is called when the user selects a different preset.
+   * It updates the selected preset, updates the form data with the new preset's values,
+   * and recalculates the concentration data.
+   *
+   * @param {string} presetId - The ID of the selected preset.
+   */
   const handlePresetChangeAndUpdate = useCallback(
     (presetId: string) => {
       handlePresetChange(presetId);
@@ -98,6 +126,7 @@ export const useDosingForm = () => {
       const indexMatch = /\d+/.exec(name);
       const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : -1;
       if (index >= 0) {
+        // Update the specific dose or time in the form data
         updateFormData(
           updateDose(formData.doses, formData.times, index, parsedValue, type)
         );
@@ -119,6 +148,9 @@ export const useDosingForm = () => {
     updateFormData(addDose(formData.doses, formData.times));
   }, [formData.doses, formData.times, updateFormData]);
 
+  /**
+   * Removes the last dose and time field from the form.
+   */
   const handleRemoveDose = useCallback(() => {
     updateFormData(removeDose(formData.doses, formData.times));
   }, [formData.doses, formData.times, updateFormData]);
@@ -158,7 +190,7 @@ export const useDosingForm = () => {
     concentrationData,
     startingTimeInput,
 
-    // Event-Handler
+    // Event Handlers
     handleStartingTimeChange,
     handleDoseChange,
     handleTimeChange,
