@@ -28,7 +28,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     try {
-      const concentration = calculateConcentration(halfLife, tMax, doses, times, startingTime);
+      const concentration = calculateConcentration(halfLife, tMax, doses, times);
       res.status(200).json({ concentration });
     } catch (error) {
       console.error('Error calculating concentration:', error);

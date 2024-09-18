@@ -3,10 +3,9 @@ export function calculateConcentration(
     tMax: number,
     doses: number[],
     times: number[],
-    startTime: number
   ): number[] {
     const timePoints = Array.from({ length: 720 }, (_, i) => i); // 12 hours * 60 minutes
-    let concentration = new Array(timePoints.length).fill(0);
+    const concentration = new Array(timePoints.length).fill(0);
   
     const halfLifeMinutes = halfLife * 60;
     const tMaxMinutes = tMax * 60;

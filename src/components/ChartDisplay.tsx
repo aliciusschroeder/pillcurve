@@ -1,11 +1,9 @@
 //src/components/ChartDisplay.tsx
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceDot, Label } from 'recharts';
-import moment from 'moment';
 import { IntakePoint } from '../types';
+import { formatIntakeLabel, formatXAxis } from '../utils/formatters';
 import ChartContainer from './ChartContainer';
 import ChartCore from './ChartCore';
-import { formatXAxis, formatIntakeLabel } from '../utils/formatters';
 
 
 
