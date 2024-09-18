@@ -1,7 +1,7 @@
 // src/components/DoseInput.tsx
 
 import React from 'react';
-import { TextField, Button, IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { ThemeProvider } from '@mui/material/styles';
 import { FormSection, FormHeader } from './styledComponents';
@@ -41,7 +41,7 @@ const DoseInput: React.FC<DoseInputProps> = ({
           <div id="doses" className="space-y-4">
             {Array.from({ length: doseCount }, (_, index) => (
               <div className="flex flex-col md:flex-row gap-4" key={index}>
-                <DoseField index={index} dose={doses[index] || 0} onDoseChange={onDoseChange} />
+                <DoseField index={index} dose={doses[index] ?? 0} onDoseChange={onDoseChange} />
                 {index === 0 ? (
                   <StartingTimeField onStartingTimeChange={onStartingTimeChange} />
                 ) : (
