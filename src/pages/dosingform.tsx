@@ -1,11 +1,38 @@
 // src/pages/page.tsx
 
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+
 import Head from 'next/head';
-import DosingForm from '../components/DosingForm';
 import Footer from '~/components/Footer';
 
-const Home: React.FC = () => {
+import DosingForm from '../components/DosingForm';
+import presets from '../config/presets';
+import { encodeState } from '../utils/urlStateUtils';
+
+const DosingFormPage: React.FC = () => {
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (!router.isReady) return;
+  
+      // If there's no state in the URL, redirect to the default state
+      if (!router.query.state) {
+        alert('No state found in URL, redirecting to default state');
+        const defaultState = encodeState({
+          selectedPreset: presets[0]!.id,
+          tMax: presets[0]!.tMax,
+          halfLife: presets[0]!.halfLife,
+          startingTime: 1,
+          doses: [100],
+          times: [0],
+        });
+        router.replace(`?state=${defaultState}`, undefined, { shallow: true });
+      }
+    }, [router.isReady]);
+  
+    if (!router.isReady) return null;
+  
     return (
         <>
             <Head>
@@ -21,6 +48,7 @@ const Home: React.FC = () => {
             </div>
         </>
     );
-};
+  };
+  
 
-export default Home;
+export default DosingFormPage;

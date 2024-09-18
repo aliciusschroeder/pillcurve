@@ -13,6 +13,7 @@ export interface PresetOption {
 }
 
 export interface FormData {
+  selectedPreset: string;
   tMax: number;
   halfLife: number;
   startingTime: number;

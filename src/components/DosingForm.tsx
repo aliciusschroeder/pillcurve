@@ -1,6 +1,6 @@
 // src/components/DosingForm.tsx
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import PresetSelector from './PresetSelector';
 import DoseInput from './DoseInput';
 import ChartDisplay from './ChartDisplay';
@@ -24,11 +24,9 @@ const DosingForm: React.FC = () => {
         handleTMaxChange,
     } = useDosingForm();
 
-    const handleCalculateClick = () => {
+    const handleCalculateClick = useCallback(() => {
         calculateConcentrationLocally();
-    };
-
-
+    }, [calculateConcentrationLocally]);
 
     return (
         <>
@@ -66,4 +64,4 @@ const DosingForm: React.FC = () => {
     );
 };
 
-export default DosingForm;
+export default React.memo(DosingForm);
