@@ -1,19 +1,15 @@
-// ./src/hooks/useDosingForm.ts
+// src/hooks/useDosingForm.ts
 
-import moment from "moment";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import presets from "../config/presets";
-import { calculateConcentration } from "../utils/calculateConcentration";
 import { addDose, removeDose, updateDose } from "../utils/doseUtils";
-import { decodeState, encodeState } from "../utils/urlStateUtils";
+import { useConcentrationData } from "./useConcentrationData";
 import { useFormState } from "./useFormState";
 import { usePresetSelection } from "./usePresetSelection";
+import { useStartingTimeInput } from "./useStartingTimeInput";
+import { useUrlState } from "./useUrlState";
 
 export const useDosingForm = () => {
-  const router = useRouter();
-  const [concentrationData, setConcentrationData] = useState<number[]>([]);
-  const [initialStateLoaded, setInitialStateLoaded] = useState(false);
   const { formData, updateFormData } = useFormState({
     selectedPreset: presets[0]!.id,
     tMax: presets[0]!.tMax,
@@ -22,17 +18,6 @@ export const useDosingForm = () => {
     doses: [100],
     times: [0],
   });
-  const [startingTimeInput, setStartingTimeInput] = useState<string>(() => {
-    const initialStartingTime =
-      formData.startingTime >= 0
-        ? moment()
-          .startOf("day")
-          .add(formData.startingTime, "minutes")
-          .format("HH:mm")
-        : "";
-    return initialStartingTime;
-  });
-
 
   const {
     selectedPreset,
@@ -41,24 +26,22 @@ export const useDosingForm = () => {
     updateCustomPresetData,
   } = usePresetSelection(presets);
 
-  const calculateConcentrationLocally = useCallback(() => {
-    const { halfLife, tMax, doses, times, startingTime } = formData;
-    const concentration = calculateConcentration(halfLife, tMax, doses, times);
-    setConcentrationData(concentration);
-  }, [formData]);
+  const { concentrationData, calculateConcentrationLocally } =
+    useConcentrationData(formData);
 
-  // Update startingTimeInput when formData.startingTime changes
-  useEffect(() => {
-    if (formData.startingTime >= 0) {
-      const formattedTime = moment()
-        .startOf("day")
-        .add(formData.startingTime, "minutes")
-        .format("HH:mm");
-      setStartingTimeInput(formattedTime);
-    }
-  }, [formData.startingTime]);
+  const { initialStateLoaded } = useUrlState(
+    formData,
+    updateFormData,
+    handlePresetChange,
+    updateCustomPresetData,
+    calculateConcentrationLocally
+  );
 
-  // Update form data when selected preset changes
+  const { startingTimeInput, handleStartingTimeChange } = useStartingTimeInput(
+    formData.startingTime,
+    updateFormData
+  );
+
   useEffect(() => {
     const selectedPresetData = getSelectedPreset();
     if (selectedPresetData && initialStateLoaded) {
@@ -77,42 +60,6 @@ export const useDosingForm = () => {
     initialStateLoaded,
   ]);
 
-  // Load initial state from URL query parameters
-  useEffect(() => {
-    if (router.isReady && !initialStateLoaded) {
-      const { query } = router;
-      if (query.state && typeof query.state === "string") {
-        const decodedState = decodeState(query.state);
-        updateFormData(decodedState);
-        handlePresetChange(decodedState.selectedPreset);
-        if (decodedState.selectedPreset === "custom") {
-          updateCustomPresetData({
-            halfLife: decodedState.halfLife,
-            tMax: decodedState.tMax,
-          });
-        }
-        calculateConcentrationLocally();
-      }
-      setInitialStateLoaded(true);
-    }
-  }, [
-    router.isReady,
-    router.query,
-    updateFormData,
-    handlePresetChange,
-    updateCustomPresetData,
-    calculateConcentrationLocally,
-    initialStateLoaded,
-  ]);
-
-  // Update URL when form data changes
-  useEffect(() => {
-    if (initialStateLoaded) {
-      const encodedState = encodeState(formData);
-      router.push(`?state=${encodedState}`, undefined, { shallow: true });
-    }
-  }, [formData, router.push, initialStateLoaded]);
-
   const handlePresetChangeAndUpdate = useCallback(
     (presetId: string) => {
       handlePresetChange(presetId);
@@ -126,7 +73,7 @@ export const useDosingForm = () => {
         calculateConcentrationLocally();
       }
     },
-    [handlePresetChange, updateFormData, calculateConcentrationLocally, presets]
+    [handlePresetChange, updateFormData, calculateConcentrationLocally]
   );
 
   const handleDoseChange = useCallback(
@@ -185,31 +132,6 @@ export const useDosingForm = () => {
     updateFormData(removeDose(formData.doses, formData.times));
   }, [formData.doses, formData.times, updateFormData]);
 
-  const handleStartingTimeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setStartingTimeInput(value);
-
-      const [hoursStr, minutesStr] = value.split(":");
-      const hours = parseInt(hoursStr ?? "", 10);
-      const minutes = parseInt(minutesStr ?? "", 10);
-      if (
-        !isNaN(hours) &&
-        !isNaN(minutes) &&
-        hours >= 0 &&
-        hours < 24 &&
-        minutes >= 0 &&
-        minutes < 60
-      ) {
-        const totalMinutes = hours * 60 + minutes;
-        updateFormData({ startingTime: totalMinutes });
-      }
-      // Do not update formData.startingTime if input is invalid
-    },
-    [updateFormData]
-  );
-
-
   const handleHalfLifeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newHalfLife = parseFloat(e.target.value);
@@ -242,7 +164,7 @@ export const useDosingForm = () => {
     concentrationData,
     startingTimeInput,
 
-    // Input Handlers
+    // Event-Handler
     handleStartingTimeChange,
     handleDoseChange,
     handleTimeChange,
@@ -254,7 +176,6 @@ export const useDosingForm = () => {
 
     // Utilities
     getSelectedPreset,
-    // updateFormData,
     calculateConcentrationLocally,
   };
 };
