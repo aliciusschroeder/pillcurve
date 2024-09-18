@@ -1,12 +1,9 @@
-// ./utils/formatters.ts
+// src/utils/formatters.ts
 
 import moment from "moment";
 import { IntakePoint } from "../types";
 
-export const formatXAxis = (
-  tickItem: number,
-  startingTime: number
-): string => {
+export const formatXAxis = (tickItem: number, startingTime: number): string => {
   const time = moment()
     .startOf("day")
     .add(startingTime + tickItem, "minutes");

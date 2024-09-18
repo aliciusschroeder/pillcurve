@@ -1,4 +1,5 @@
-// ./components/ChartContainer.tsx
+// src/components/ChartContainer.tsx
+
 import React from "react";
 
 interface ChartContainerProps {

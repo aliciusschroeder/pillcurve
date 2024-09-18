@@ -1,6 +1,6 @@
 /**
  * Calculates the concentration of a drug over time based on multiple doses.
- * 
+ *
  * This function implements a pharmacokinetic model that accounts for both the absorption
  * and elimination phases of drug metabolism. It uses a simplified linear absorption model
  * up to Tmax, followed by a first-order elimination model.

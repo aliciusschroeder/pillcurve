@@ -10,10 +10,7 @@ export const useStartingTimeInput = (
   const [startingTimeInput, setStartingTimeInput] = useState<string>(() => {
     const initialStartingTime =
       startingTime >= 0
-        ? moment()
-          .startOf("day")
-          .add(startingTime, "minutes")
-          .format("HH:mm")
+        ? moment().startOf("day").add(startingTime, "minutes").format("HH:mm")
         : "";
     return initialStartingTime;
   });
@@ -31,7 +28,6 @@ export const useStartingTimeInput = (
     },
     [updateFormData]
   );
-
 
   // Aktualisiere die Eingabe, wenn sich die Startzeit ändert
   useEffect(() => {

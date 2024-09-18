@@ -140,7 +140,6 @@ export const useDosingForm = () => {
   const handleDoseChange = handleInputChange("dose");
   const handleTimeChange = handleInputChange("time");
 
-
   /**
    * Adds a new dose and time field to the form.
    */

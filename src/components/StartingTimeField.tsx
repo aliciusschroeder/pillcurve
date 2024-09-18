@@ -1,4 +1,4 @@
-// ./src/components/StartingTimeField.tsx
+// src/components/StartingTimeField.tsx
 
 import { TextField } from "@mui/material";
 import React from "react";

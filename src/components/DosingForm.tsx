@@ -6,7 +6,6 @@ import ChartDisplay from "./ChartDisplay";
 import DoseInput from "./DoseInput";
 import PresetSelector from "./PresetSelector";
 
-
 const DosingForm: React.FC = () => {
   const {
     presets,
@@ -26,8 +25,6 @@ const DosingForm: React.FC = () => {
 
     getSelectedPreset,
     calculateConcentrationLocally,
-    
-    
   } = useDosingForm();
 
   const handleCalculateClick = useCallback(() => {

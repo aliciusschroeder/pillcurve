@@ -1,4 +1,4 @@
-// ./src/pages/dosingform.tsx
+// src/pages/dosingform.tsx
 
 import Head from "next/head";
 import { useRouter } from "next/router";

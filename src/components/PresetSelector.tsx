@@ -57,7 +57,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({
           <MenuItem value="custom">Custom</MenuItem>
         </TextField>
       </div>
-      <div className="grid grid-cols-2 gap-2 mt-2">
+      <div className="mt-2 grid grid-cols-2 gap-2">
         <TextField
           label="Half-Life"
           type="number"

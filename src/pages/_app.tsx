@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps, AppType } from "next/app";
 import theme from "../theme/theme";
 
-
 import "~/styles/globals.css";
 
 const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
