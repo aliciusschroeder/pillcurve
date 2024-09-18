@@ -18,9 +18,8 @@ export const useUrlState = (
   // Initialen Zustand aus der URL laden
   useEffect(() => {
     if (router.isReady && !initialStateLoaded) {
-      const { query } = router;
-      if (query.state && typeof query.state === "string") {
-        const decodedState = decodeState(query.state);
+      if (router.query.state && typeof router.query.state === "string") {
+        const decodedState = decodeState(router.query.state);
         updateFormData(decodedState);
         handlePresetChange(decodedState.selectedPreset);
         if (decodedState.selectedPreset === "custom") {
@@ -36,6 +35,7 @@ export const useUrlState = (
   }, [
     router.isReady,
     router.query,
+    router.query.state,
     updateFormData,
     handlePresetChange,
     updateCustomPresetData,
